@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import Image from 'next/image'
 import { ShieldCheck } from 'lucide-react'
 
 type Vehicle = {
@@ -13,28 +14,41 @@ type Vehicle = {
   fuel: string | null
   mileage_km: number | null
   description: string | null
+  vehicle_photos?: { url: string; position: number }[]
 }
 
 export default function VehicleDetail({ vehicle }: { vehicle: Vehicle }) {
   const [activeThumb, setActiveThumb] = useState(0)
   const [fav, setFav] = useState(false)
 
+  const photos = [...(vehicle.vehicle_photos ?? [])].sort((a, b) => a.position - b.position)
   const acompte = Math.round(vehicle.price_eur * 0.25)
 
   return (
     <div className="vehicle-wrap">
       <div>
         <div className="gallery fade-up d1">
-          <div className="gallery-main">Photo principale du véhicule</div>
-          <div className="gallery-thumbs">
-            {[0, 1, 2, 3, 4].map((i) => (
-              <div
-                key={i}
-                className={`thumb ${activeThumb === i ? 'active' : ''}`}
-                onClick={() => setActiveThumb(i)}
-              />
-            ))}
+          <div className="gallery-main" style={{ position: 'relative', overflow: 'hidden' }}>
+            {photos[activeThumb] ? (
+              <Image src={photos[activeThumb].url} alt={`${vehicle.brand} ${vehicle.model}`} fill style={{ objectFit: 'cover' }} />
+            ) : (
+              'Photo principale du véhicule'
+            )}
           </div>
+          {photos.length > 0 && (
+            <div className="gallery-thumbs">
+              {photos.map((photo, i) => (
+                <div
+                  key={photo.url}
+                  className={`thumb ${activeThumb === i ? 'active' : ''}`}
+                  style={{ position: 'relative', overflow: 'hidden' }}
+                  onClick={() => setActiveThumb(i)}
+                >
+                  <Image src={photo.url} alt="" fill style={{ objectFit: 'cover' }} />
+                </div>
+              ))}
+            </div>
+          )}
         </div>
 
         <div className="specs-card fade-up d2">

@@ -3,11 +3,10 @@ import { redirect } from 'next/navigation'
 import { ADMIN_EMAIL } from '@/lib/admin'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
-import OrdersTable from '@/components/OrdersTable'
-import PaymentSettingsForm from '@/components/PaymentSettingsForm'
+import AddVehicleForm from '@/components/AddVehicleForm'
 import Link from 'next/link'
 
-export default async function AdminOrdersPage() {
+export default async function AdminPage() {
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
 
@@ -15,16 +14,10 @@ export default async function AdminOrdersPage() {
     redirect('/connexion')
   }
 
-  const { data: orders } = await supabase
-    .from('orders')
-    .select('*, vehicles(brand, model), payments(id, receipt_url, status)')
+  const { data: vehicles } = await supabase
+    .from('vehicles')
+    .select('*')
     .order('created_at', { ascending: false })
-
-  const { data: settings } = await supabase
-    .from('payment_settings')
-    .select('beneficiary_name, iban, bic')
-    .eq('id', 1)
-    .single()
 
   return (
     <>
@@ -33,13 +26,33 @@ export default async function AdminOrdersPage() {
         <h1 style={{ fontFamily: 'Oswald, sans-serif' }}>Tableau de bord admin</h1>
 
         <div className="admin-tabs">
-          <Link href="/admin" className="admin-tab">Véhicules</Link>
-          <Link href="/admin/commandes" className="admin-tab active">Commandes</Link>
+          <Link href="/admin" className="admin-tab active">Véhicules</Link>
+          <Link href="/admin/commandes" className="admin-tab">Commandes</Link>
         </div>
 
-        {settings && <PaymentSettingsForm settings={settings} />}
+        <AddVehicleForm />
 
-        <OrdersTable orders={orders ?? []} />
+        <div className="admin-card">
+          <h2 className="section-title">Catalogue actuel ({vehicles?.length ?? 0})</h2>
+          <table className="admin-table">
+            <thead>
+              <tr>
+                <th>Véhicule</th>
+                <th>Prix</th>
+                <th>Ajouté le</th>
+              </tr>
+            </thead>
+            <tbody>
+              {vehicles?.map((v) => (
+                <tr key={v.id}>
+                  <td>{v.brand} {v.model} {v.year}</td>
+                  <td>{v.price_eur.toLocaleString('fr-FR')} €</td>
+                  <td>{new Date(v.created_at).toLocaleDateString('fr-FR')}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
       <Footer />
     </>

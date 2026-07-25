@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 
 type Vehicle = {
   id: string
@@ -12,15 +13,23 @@ type Vehicle = {
   transmission: string | null
   fuel: string | null
   mileage_km: number | null
+  vehicle_photos?: { url: string; position: number }[]
 }
 
 export default function CarCard({ vehicle }: { vehicle: Vehicle }) {
   const [fav, setFav] = useState(false)
 
+  const photos = [...(vehicle.vehicle_photos ?? [])].sort((a, b) => a.position - b.position)
+  const mainPhoto = photos[0]?.url
+
   return (
     <Link href={`/vehicule/${vehicle.id}`} className="car-card">
       <div className="car-photo">
-        Photo véhicule
+        {mainPhoto ? (
+          <Image src={mainPhoto} alt={`${vehicle.brand} ${vehicle.model}`} fill style={{ objectFit: 'cover' }} />
+        ) : (
+          'Photo véhicule'
+        )}
         <div
           className="fav-btn"
           onClick={(e) => {

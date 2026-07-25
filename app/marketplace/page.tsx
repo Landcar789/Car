@@ -7,7 +7,7 @@ export default async function MarketplacePage() {
   const supabase = await createClient()
   const { data: vehicles, error } = await supabase
     .from('vehicles')
-    .select('*')
+    .select('*, vehicle_photos(url, position)')
     .eq('is_published', true)
     .order('created_at', { ascending: false })
 
