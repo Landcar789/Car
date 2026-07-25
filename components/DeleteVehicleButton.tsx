@@ -2,7 +2,6 @@
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { createClient } from '@/lib/supabase/client'
 
 export default function DeleteVehicleButton({ vehicleId, vehicleName, isPublished }: { vehicleId: string; vehicleName: string; isPublished: boolean }) {
   const router = useRouter()
@@ -16,15 +15,17 @@ export default function DeleteVehicleButton({ vehicleId, vehicleName, isPublishe
 
     setLoading(true)
     setError(null)
-    const supabase = createClient()
 
-    const { error } = await supabase
-      .from('vehicles')
-      .update({ is_published: !isPublished })
-      .eq('id', vehicleId)
+    const res = await fetch('/api/admin/toggle-vehicle', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ vehicleId, isPublished }),
+    })
 
-    if (error) {
-      setError(error.message)
+    const data = await res.json()
+
+    if (!res.ok) {
+      setError(data.error ?? 'Erreur inconnue')
       setLoading(false)
       return
     }
