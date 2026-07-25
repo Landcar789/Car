@@ -41,7 +41,8 @@ export default async function AdminPage() {
                 <th>Véhicule</th>
                 <th>Prix</th>
                 <th>Ajouté le</th>
-                <th>Action</th>
+                <th>Statut</th>
+<th>Action</th>
               </tr>
             </thead>
             <tbody>
@@ -49,8 +50,13 @@ export default async function AdminPage() {
                 <tr key={v.id}>
                   <td>{v.brand} {v.model} {v.year}</td>
                   <td>{v.price_eur.toLocaleString('fr-FR')} €</td>
+                  <td>
+                  <span className={`status-badge ${v.is_published ? 'verified' : 'pending'}`}>
+                     {v.is_published ? 'Publié' : 'Masqué'}
+                   </span>
+                  </td>
                   <td>{new Date(v.created_at).toLocaleDateString('fr-FR')}</td>
-                  <td><DeleteVehicleButton vehicleId={v.id} vehicleName={`${v.brand} ${v.model}`} /></td>
+                  <td><DeleteVehicleButton vehicleId={v.id} vehicleName={`${v.brand} ${v.model}`} isPublished={v.is_published} /></td>
                 </tr>
               ))}
             </tbody>
