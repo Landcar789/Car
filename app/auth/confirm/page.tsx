@@ -3,7 +3,6 @@
 import { Suspense, useState } from 'react'
 import { useSearchParams, useRouter } from 'next/navigation'
 import { createClient } from '@/lib/supabase/client'
-import { type EmailOtpType } from '@supabase/supabase-js'
 
 function ConfirmContent() {
   const searchParams = useSearchParams()
@@ -15,17 +14,16 @@ function ConfirmContent() {
     setLoading(true)
     setError(null)
 
-    const token_hash = searchParams.get('token_hash')
-    const type = searchParams.get('type') as EmailOtpType | null
+    const code = searchParams.get('code')
 
-    if (!token_hash || !type) {
+    if (!code) {
       setError('Lien invalide.')
       setLoading(false)
       return
     }
 
     const supabase = createClient()
-    const { error } = await supabase.auth.verifyOtp({ type, token_hash })
+    const { error } = await supabase.auth.exchangeCodeForSession(code)
 
     if (error) {
       setError('Ce lien a déjà été utilisé ou a expiré. Réessaie de te connecter directement, ton compte est peut-être déjà confirmé.')
