@@ -2,6 +2,7 @@ import { createClient } from '@/lib/supabase/server'
 import { redirect } from 'next/navigation'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
+import LogoutButton from '@/components/LogoutButton'
 
 export default async function ComptePage() {
   const supabase = await createClient()
@@ -20,6 +21,7 @@ export default async function ComptePage() {
         <p style={{ color: 'var(--text-dim)', fontSize: 14, marginTop: 20 }}>
           Vos favoris et commandes s&apos;afficheront ici prochainement.
         </p>
+        <LogoutButton />
       </main>
       <Footer />
     </>
