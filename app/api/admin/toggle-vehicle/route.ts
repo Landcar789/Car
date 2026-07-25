@@ -1,4 +1,5 @@
 import { createClient } from '@/lib/supabase/server'
+import { createAdminClient } from '@/lib/supabase/admin-server'
 import { ADMIN_EMAIL } from '@/lib/admin'
 import { NextResponse } from 'next/server'
 
@@ -12,7 +13,8 @@ export async function POST(request: Request) {
 
   const { vehicleId, isPublished } = await request.json()
 
-  const { error } = await supabase
+  const admin = createAdminClient()
+  const { error } = await admin
     .from('vehicles')
     .update({ is_published: !isPublished })
     .eq('id', vehicleId)
