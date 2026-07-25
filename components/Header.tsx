@@ -27,7 +27,7 @@ export default function Header() {
   return (
     <>
       <div className="infobar">
-        <div>Lun – Sam : 8h00 – 18h00 · Allensteiner Str. 26a, Kehl</div>
+        <div>Allensteiner Str. 26a, Kehl</div>
         <div className="right">
           <a href="tel:+491778612854" className="infobar-icon" title="Appeler">
             <Phone size={14} />
