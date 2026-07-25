@@ -1,7 +1,6 @@
 'use client'
 
 import { useState } from 'react'
-import { createClient } from '@/lib/supabase/client'
 import { useRouter } from 'next/navigation'
 
 type PaymentSettings = {
@@ -21,11 +20,11 @@ export default function PaymentSettingsForm({ settings }: { settings: PaymentSet
     setSaving(true)
     setSaved(false)
 
-    const supabase = createClient()
-    await supabase
-      .from('payment_settings')
-      .update({ ...form, updated_at: new Date().toISOString() })
-      .eq('id', 1)
+    await fetch('/api/admin/payment-settings', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(form),
+    })
 
     setSaving(false)
     setSaved(true)

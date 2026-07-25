@@ -1,7 +1,6 @@
 'use client'
 
 import { useState } from 'react'
-import { createClient } from '@/lib/supabase/client'
 import { useRouter } from 'next/navigation'
 
 type Order = {
@@ -22,9 +21,11 @@ export default function OrdersTable({ orders }: { orders: Order[] }) {
 
   const handleValidatePayment = async (orderId: string, paymentId: string) => {
     setSaving(orderId)
-    const supabase = createClient()
-    await supabase.from('payments').update({ status: 'verified', verified_at: new Date().toISOString() }).eq('id', paymentId)
-    await supabase.from('orders').update({ status: 'confirmed' }).eq('id', orderId)
+    await fetch('/api/admin/validate-payment', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ orderId, paymentId }),
+    })
     setSaving(null)
     router.refresh()
   }
