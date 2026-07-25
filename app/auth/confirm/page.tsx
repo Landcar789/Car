@@ -1,11 +1,11 @@
 'use client'
 
-import { useState } from 'react'
+import { Suspense, useState } from 'react'
 import { useSearchParams, useRouter } from 'next/navigation'
 import { createClient } from '@/lib/supabase/client'
 import { type EmailOtpType } from '@supabase/supabase-js'
 
-export default function ConfirmPage() {
+function ConfirmContent() {
   const searchParams = useSearchParams()
   const router = useRouter()
   const [loading, setLoading] = useState(false)
@@ -59,5 +59,13 @@ export default function ConfirmPage() {
         </div>
       )}
     </main>
+  )
+}
+
+export default function ConfirmPage() {
+  return (
+    <Suspense fallback={<div style={{ padding: 80, textAlign: 'center' }}>Chargement...</div>}>
+      <ConfirmContent />
+    </Suspense>
   )
 }
