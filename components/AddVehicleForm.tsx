@@ -15,14 +15,15 @@ export default function AddVehicleForm() {
     setSubmitting(true)
     setError(null)
 
-    const supabase = createClient()
     const form = e.currentTarget
     const formData = new FormData(form)
 
     try {
-      const { data: vehicle, error: insertError } = await supabase
-        .from('vehicles')
-        .insert({
+      // 1. Créer le véhicule via la route serveur
+      const res = await fetch('/api/admin/add-vehicle', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
           brand: formData.get('brand'),
           model: formData.get('model'),
           year: Number(formData.get('year')) || null,
@@ -31,18 +32,22 @@ export default function AddVehicleForm() {
           fuel: formData.get('fuel'),
           mileage_km: Number(formData.get('mileage_km')) || null,
           description: formData.get('description'),
-          is_published: true,
-        })
-        .select()
-        .single()
+        }),
+      })
 
-      if (insertError) throw insertError
+      const data = await res.json()
+      if (!res.ok) throw new Error(data.error ?? 'Erreur ajout véhicule')
 
+      const vehicle = data.vehicle
+
+      // 2. Upload des photos (côté navigateur) + enregistrement via route serveur
       if (photos && photos.length > 0) {
+        const supabase = createClient()
         for (let i = 0; i < photos.length; i++) {
           const file = photos[i]
           const cleanFileName = file.name.replace(/[^a-zA-Z0-9.]/g, '_')
-const filePath = `${vehicle.id}-${Date.now()}-${i}-${cleanFileName}`
+          const filePath = `${vehicle.id}-${Date.now()}-${i}-${cleanFileName}`
+
           const { error: uploadError } = await supabase.storage
             .from('vehicle-photos')
             .upload(filePath, file)
@@ -51,11 +56,15 @@ const filePath = `${vehicle.id}-${Date.now()}-${i}-${cleanFileName}`
 
           const { data: urlData } = supabase.storage.from('vehicle-photos').getPublicUrl(filePath)
 
-          await supabase.from('vehicle_photos').insert({
-            vehicle_id: vehicle.id,
-            url: urlData.publicUrl,
-            position: i,
+          const photoRes = await fetch('/api/admin/add-photo', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ vehicleId: vehicle.id, url: urlData.publicUrl, position: i }),
           })
+          if (!photoRes.ok) {
+            const pd = await photoRes.json()
+            throw new Error(pd.error ?? 'Erreur ajout photo')
+          }
         }
       }
 
