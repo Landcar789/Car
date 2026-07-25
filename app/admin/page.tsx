@@ -4,6 +4,7 @@ import { ADMIN_EMAIL } from '@/lib/admin'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import AddVehicleForm from '@/components/AddVehicleForm'
+import DeleteVehicleButton from '@/components/DeleteVehicleButton'
 import Link from 'next/link'
 
 export default async function AdminPage() {
@@ -40,6 +41,7 @@ export default async function AdminPage() {
                 <th>Véhicule</th>
                 <th>Prix</th>
                 <th>Ajouté le</th>
+                <th>Action</th>
               </tr>
             </thead>
             <tbody>
@@ -48,6 +50,7 @@ export default async function AdminPage() {
                   <td>{v.brand} {v.model} {v.year}</td>
                   <td>{v.price_eur.toLocaleString('fr-FR')} €</td>
                   <td>{new Date(v.created_at).toLocaleDateString('fr-FR')}</td>
+                  <td><DeleteVehicleButton vehicleId={v.id} vehicleName={`${v.brand} ${v.model}`} /></td>
                 </tr>
               ))}
             </tbody>
