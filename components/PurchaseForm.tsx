@@ -13,7 +13,6 @@ type Vehicle = {
   transmission: string | null
   fuel: string | null
   mileage_km: number | null
-  mileage_km: number | null
   vehicle_photos?: { url: string; position: number }[]
 }
 
@@ -26,6 +25,7 @@ export default function PurchaseForm({ vehicle }: { vehicle: Vehicle }) {
 
   const acompte = Math.round(vehicle.price_eur * 0.25)
   const reste = vehicle.price_eur - acompte
+  const photos = [...(vehicle.vehicle_photos ?? [])].sort((a, b) => a.position - b.position)
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -41,9 +41,8 @@ export default function PurchaseForm({ vehicle }: { vehicle: Vehicle }) {
     const formData = new FormData(form)
 
     try {
-      // 1. Upload de la pièce d'identité
       const cleanFileName = file.name.replace(/[^a-zA-Z0-9.]/g, '_')
-const filePath = `${vehicle.id}-${Date.now()}-${cleanFileName}`
+      const filePath = `${vehicle.id}-${Date.now()}-${cleanFileName}`
       const { error: uploadError } = await supabase.storage
         .from('id-documents')
         .upload(filePath, file)
@@ -52,10 +51,8 @@ const filePath = `${vehicle.id}-${Date.now()}-${cleanFileName}`
 
       const { data: urlData } = supabase.storage.from('id-documents').getPublicUrl(filePath)
 
-      // 2. Récupérer l'utilisateur connecté (optionnel)
       const { data: { user } } = await supabase.auth.getUser()
 
-      // 3. Créer la commande
       const { data: order, error: orderError } = await supabase
         .from('orders')
         .insert({
@@ -79,7 +76,6 @@ const filePath = `${vehicle.id}-${Date.now()}-${cleanFileName}`
 
       if (orderError) throw orderError
 
-      // 4. Redirection vers la page paiement avec l'ID de la commande
       window.location.href = `/paiement/${order.id}`
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Une erreur est survenue.')
@@ -163,15 +159,12 @@ const filePath = `${vehicle.id}-${Date.now()}-${cleanFileName}`
 
         <div className="achat-card summary-card">
           <div className="car-thumb" style={{ position: 'relative', overflow: 'hidden' }}>
-  {(() => {
-    const photos = [...(vehicle.vehicle_photos ?? [])].sort((a, b) => a.position - b.position)
-    return photos[0] ? (
-      <Image src={photos[0].url} alt={`${vehicle.brand} ${vehicle.model}`} fill style={{ objectFit: 'cover' }} />
-    ) : (
-      'Photo du véhicule'
-    )
-  })()}
-</div>
+            {photos[0] ? (
+              <Image src={photos[0].url} alt={`${vehicle.brand} ${vehicle.model}`} fill style={{ objectFit: 'cover' }} />
+            ) : (
+              'Photo du véhicule'
+            )}
+          </div>
           <p className="car-name">{vehicle.brand} {vehicle.model} {vehicle.year}</p>
           <p className="car-meta">
             {[vehicle.fuel, vehicle.transmission, vehicle.mileage_km ? `${vehicle.mileage_km.toLocaleString('fr-FR')} km` : null].filter(Boolean).join(' · ')}
