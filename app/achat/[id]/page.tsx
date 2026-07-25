@@ -10,7 +10,7 @@ export default async function AchatPage({ params }: { params: Promise<{ id: stri
 
   const { data: vehicle } = await supabase
     .from('vehicles')
-    .select('*')
+    .select('*, vehicle_photos(url, position)')
     .eq('id', id)
     .single()
 

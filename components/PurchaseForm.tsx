@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import Image from 'next/image'
 import { createClient } from '@/lib/supabase/client'
 
 type Vehicle = {
@@ -12,6 +13,8 @@ type Vehicle = {
   transmission: string | null
   fuel: string | null
   mileage_km: number | null
+  mileage_km: number | null
+  vehicle_photos?: { url: string; position: number }[]
 }
 
 export default function PurchaseForm({ vehicle }: { vehicle: Vehicle }) {
@@ -159,7 +162,16 @@ const filePath = `${vehicle.id}-${Date.now()}-${cleanFileName}`
         </form>
 
         <div className="achat-card summary-card">
-          <div className="car-thumb">Photo du véhicule</div>
+          <div className="car-thumb" style={{ position: 'relative', overflow: 'hidden' }}>
+  {(() => {
+    const photos = [...(vehicle.vehicle_photos ?? [])].sort((a, b) => a.position - b.position)
+    return photos[0] ? (
+      <Image src={photos[0].url} alt={`${vehicle.brand} ${vehicle.model}`} fill style={{ objectFit: 'cover' }} />
+    ) : (
+      'Photo du véhicule'
+    )
+  })()}
+</div>
           <p className="car-name">{vehicle.brand} {vehicle.model} {vehicle.year}</p>
           <p className="car-meta">
             {[vehicle.fuel, vehicle.transmission, vehicle.mileage_km ? `${vehicle.mileage_km.toLocaleString('fr-FR')} km` : null].filter(Boolean).join(' · ')}
