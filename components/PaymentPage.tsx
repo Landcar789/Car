@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { AlertCircle, Upload } from 'lucide-react'
+import { AlertCircle } from 'lucide-react'
 import { createClient } from '@/lib/supabase/client'
 
 type Order = {
@@ -24,9 +24,6 @@ type PaymentSettings = {
 
 export default function PaymentPage({ order }: { order: Order }) {
   const [copied, setCopied] = useState(false)
-  const [file, setFile] = useState<File | null>(null)
-  const [submitting, setSubmitting] = useState(false)
-  const [error, setError] = useState<string | null>(null)
   const [settings, setSettings] = useState<PaymentSettings | null>(null)
 
   useEffect(() => {
@@ -48,44 +45,8 @@ export default function PaymentPage({ order }: { order: Order }) {
     setTimeout(() => setCopied(false), 1500)
   }
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    if (!file) {
-      setError('Merci de joindre votre reçu de paiement.')
-      return
-    }
-    setSubmitting(true)
-    setError(null)
-
-    const supabase = createClient()
-
-    try {
-      const cleanFileName = file.name.replace(/[^a-zA-Z0-9.]/g, '_')
-const filePath = `${order.id}-${Date.now()}-${cleanFileName}`
-      const { error: uploadError } = await supabase.storage
-        .from('payment-receipts')
-        .upload(filePath, file)
-
-      if (uploadError) throw uploadError
-
-      const { data: urlData } = supabase.storage.from('payment-receipts').getPublicUrl(filePath)
-
-      const { error: paymentError } = await supabase.from('payments').insert({
-        order_id: order.id,
-        receipt_url: urlData.publicUrl,
-        status: 'pending_verification',
-      })
-
-      if (paymentError) throw paymentError
-
-      await supabase.from('orders').update({ status: 'pending_verification' }).eq('id', order.id)
-
-      window.location.href = `/confirmation/${order.id}`
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'Une erreur est survenue.')
-      setSubmitting(false)
-    }
-  }
+  const whatsappLink = `https://wa.me/491778612854?text=${encodeURIComponent(`Bonjour, voici le reçu de paiement pour ma commande CMD-${reference} (${order.vehicles.brand} ${order.vehicles.model}).`)}`
+  const mailLink = `mailto:autoprojetmk@gmail.com?subject=${encodeURIComponent(`Reçu paiement CMD-${reference}`)}&body=${encodeURIComponent(`Bonjour, veuillez trouver ci-joint le reçu de paiement pour ma commande CMD-${reference} (${order.vehicles.brand} ${order.vehicles.model}).`)}`
 
   return (
     <div className="narrow-wrap">
@@ -105,7 +66,7 @@ const filePath = `${order.id}-${Date.now()}-${cleanFileName}`
 
       <div className="alert-box fade-up d1">
         <AlertCircle size={20} strokeWidth={2} />
-        <p>Votre commande ne sera <b>définitivement validée</b> qu&apos;après réception du virement et vérification du reçu ci-dessous.</p>
+        <p>Votre commande ne sera <b>définitivement validée</b> qu&apos;après réception du virement et vérification de votre reçu.</p>
       </div>
 
       <div className="narrow-card fade-up d1">
@@ -136,30 +97,29 @@ const filePath = `${order.id}-${Date.now()}-${cleanFileName}`
         )}
       </div>
 
-      <form className="narrow-card fade-up d3" onSubmit={handleSubmit}>
-        <h2>Envoyer le reçu de paiement</h2>
-        <label className="upload-box" style={{ display: 'block', padding: '28px 20px' }}>
-          <Upload size={26} strokeWidth={1.8} style={{ marginBottom: 8, color: 'var(--petrol)' }} />
-          <div>{file ? `✅ ${file.name}` : 'Cliquer pour joindre une capture ou photo du virement'}</div>
-          <input
-            type="file"
-            accept="image/*,.pdf"
-            style={{ display: 'none' }}
-            onChange={(e) => setFile(e.target.files?.[0] ?? null)}
-          />
-        </label>
+      <div className="narrow-card fade-up d3">
+        <h2>Envoyer votre reçu de paiement</h2>
+        <p style={{ fontSize: 13.5, color: 'var(--text-dim)', marginBottom: 18 }}>
+          Après avoir effectué le virement, envoyez-nous votre reçu par WhatsApp ou par email en indiquant votre référence <b style={{ color: 'var(--text)' }}>CMD-{reference}</b>.
+        </p>
 
-        <div className="whatsapp-note">
-          <span>📲</span>
-          <span>Après validation, une confirmation sera envoyée à votre email. Vous pouvez aussi nous contacter directement sur WhatsApp au <b>+49 177 8612854</b>.</span>
+        <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
+          <a href={whatsappLink} target="_blank" rel="noopener noreferrer" className="btn-whatsapp" style={{ flex: 1, minWidth: 140 }}>
+            Envoyer par WhatsApp
+          </a>
+          <a href={mailLink} className="btn-primary-confirm" style={{ flex: 1, minWidth: 140 }}>
+            Envoyer par Email
+          </a>
         </div>
 
-        {error && <p style={{ color: 'crimson', fontSize: 13, marginTop: 12 }}>{error}</p>}
-
-        <button className="submit-btn" style={{ marginTop: 20 }} type="submit" disabled={submitting}>
-          {submitting ? 'Envoi en cours...' : 'Valider le paiement'}
+        <button
+          className="submit-btn"
+          style={{ marginTop: 20 }}
+          onClick={() => { window.location.href = `/confirmation/${order.id}` }}
+        >
+          J&apos;ai envoyé mon reçu
         </button>
-      </form>
+      </div>
     </div>
   )
 }
