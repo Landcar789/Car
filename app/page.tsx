@@ -4,40 +4,34 @@ import { useState } from 'react'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import { Car, ShieldCheck, Wrench, Truck, FileCheck, MessageSquare } from 'lucide-react'
+import { useLanguage } from '@/lib/LanguageContext'
 
 export default function AccueilPage() {
   const [openCond, setOpenCond] = useState<number | null>(0)
+  const { t } = useLanguage()
 
   const conditions = [
     {
-      title: 'Conditions de paiement',
-      items: [
-        <>Acompte : <b className="highlight">25% à la commande</b></>,
-        <>Montant restant (75%) : payable en mensualités sans intérêt, de 6 à 36 mois</>,
-        <>Offre spéciale : <b className="highlight">-15% de remise</b> pour un paiement comptant lors de la commande</>,
-      ],
+      title: t.home.conditions.payment.title,
+      items: [t.home.conditions.payment.item1, t.home.conditions.payment.item2, t.home.conditions.payment.item3],
     },
     {
-      title: 'Service et Livraison',
-      items: [
-        <>Prise en charge de toutes les formalités d&apos;importation jusqu&apos;à la livraison à domicile</>,
-        <>Délai de livraison : <b className="highlight">7 jours</b></>,
-        <>Droit de rétractation : <b className="highlight">14 jours</b> (satisfait ou remboursé)</>,
-      ],
+      title: t.home.conditions.service.title,
+      items: [t.home.conditions.service.item1, t.home.conditions.service.item2, t.home.conditions.service.item3],
     },
     {
-      title: 'Garantie',
-      items: [<>Garantie de <b className="highlight">24 mois</b> sur tous les véhicules vendus</>],
+      title: t.home.conditions.warranty.title,
+      items: [t.home.conditions.warranty.item1],
     },
   ]
 
   const services = [
-    { icon: Car, title: 'Achat de véhicules', desc: "Nous vous aidons à trouver et à acquérir la voiture de vos rêves, peu importe où elle se trouve." },
-    { icon: ShieldCheck, title: 'Garantie', desc: "Nous proposons des forfaits de garantie complets pour vous offrir tranquillité d'esprit et protection." },
-    { icon: Wrench, title: 'Entretien et Réparation', desc: "Nos techniciens expérimentés s'occupent de tous vos besoins d'entretien et de réparation." },
-    { icon: Truck, title: 'Transport et livraison', desc: "Nous offrons des services de transport et de livraison sûrs et fiables pour votre véhicule." },
-    { icon: FileCheck, title: 'Documentation et Approbation', desc: "Nous vous accompagnons dans tous les documents et démarches d'approbation nécessaires." },
-    { icon: MessageSquare, title: 'Conseils Personnalisés', desc: "Notre équipe est à votre disposition pour vous apporter des conseils et un accompagnement personnalisé." },
+    { icon: Car, title: t.home.services.purchase.title, desc: t.home.services.purchase.desc },
+    { icon: ShieldCheck, title: t.home.services.warranty.title, desc: t.home.services.warranty.desc },
+    { icon: Wrench, title: t.home.services.maintenance.title, desc: t.home.services.maintenance.desc },
+    { icon: Truck, title: t.home.services.transport.title, desc: t.home.services.transport.desc },
+    { icon: FileCheck, title: t.home.services.docs.title, desc: t.home.services.docs.desc },
+    { icon: MessageSquare, title: t.home.services.advice.title, desc: t.home.services.advice.desc },
   ]
 
   return (
@@ -60,20 +54,20 @@ export default function AccueilPage() {
         <div style={{ maxWidth: 1100, margin: '0 auto', width: '100%' }}>
           <div style={{ maxWidth: 560 }}>
             <div className="fade-up d1" style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: 12, textTransform: 'uppercase', letterSpacing: '0.08em', color: 'var(--gold)', marginBottom: 14 }}>
-              Votre concession en ligne
+              {t.home.eyebrow}
             </div>
             <h1 className="fade-up d2" style={{ fontFamily: 'Oswald, sans-serif', fontSize: 42, fontWeight: 600, lineHeight: 1.15, margin: '0 0 18px', color: '#fff' }}>
-              La voiture de vos rêves, où qu&apos;elle soit.
+              {t.home.title}
             </h1>
             <p className="fade-up d3" style={{ color: '#d9dedb', fontSize: 15.5, margin: '0 0 26px', maxWidth: 460 }}>
-              Nous vous accompagnons de la recherche du véhicule jusqu&apos;à la livraison à votre domicile : achat, garantie, entretien, transport, documents — tout est pris en charge.
+              {t.home.subtitle}
             </p>
             <div className="fade-up d4" style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
               <a href="/marketplace" style={{ background: 'var(--gold)', color: '#211705', border: 'none', padding: '13px 24px', borderRadius: 8, fontWeight: 600, fontSize: 14, cursor: 'pointer', textDecoration: 'none' }}>
-                Voir les véhicules
+                {t.home.seeVehicles}
               </a>
               <a href="/faq" style={{ background: 'rgba(255,255,255,0.06)', color: '#fff', border: '1px solid rgba(255,255,255,0.35)', padding: '13px 24px', borderRadius: 8, fontWeight: 600, fontSize: 14, cursor: 'pointer', textDecoration: 'none' }}>
-                Nous contacter
+                {t.home.contactUs}
               </a>
             </div>
           </div>
@@ -84,9 +78,9 @@ export default function AccueilPage() {
       <div style={{ maxWidth: 1100, margin: '0 auto', padding: '40px 24px' }}>
         <div style={{ marginBottom: 28 }}>
           <div style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: 11.5, textTransform: 'uppercase', letterSpacing: '0.08em', color: 'var(--petrol)', marginBottom: 8 }}>
-            Nos services
+            {t.home.servicesEyebrow}
           </div>
-          <h2 style={{ fontFamily: 'Oswald, sans-serif', fontSize: 26, fontWeight: 600, margin: 0 }}>Un accompagnement complet</h2>
+          <h2 style={{ fontFamily: 'Oswald, sans-serif', fontSize: 26, fontWeight: 600, margin: 0 }}>{t.home.servicesTitle}</h2>
         </div>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: 18 }}>
           {services.map((s) => {
@@ -108,9 +102,9 @@ export default function AccueilPage() {
       <div style={{ maxWidth: 1100, margin: '0 auto', padding: '40px 24px' }}>
         <div style={{ marginBottom: 28 }}>
           <div style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: 11.5, textTransform: 'uppercase', letterSpacing: '0.08em', color: 'var(--petrol)', marginBottom: 8 }}>
-            Avant de commander
+            {t.home.proceduresEyebrow}
           </div>
-          <h2 style={{ fontFamily: 'Oswald, sans-serif', fontSize: 26, fontWeight: 600, margin: 0 }}>Procédures d&apos;achat de véhicules</h2>
+          <h2 style={{ fontFamily: 'Oswald, sans-serif', fontSize: 26, fontWeight: 600, margin: 0 }}>{t.home.proceduresTitle}</h2>
         </div>
         <div style={{ background: 'var(--surface)', border: '1px solid var(--line)', borderRadius: 14, padding: 6 }}>
           {conditions.map((c, i) => (

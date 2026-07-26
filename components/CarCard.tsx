@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
+import { useLanguage } from '@/lib/LanguageContext'
 
 type Vehicle = {
   id: string
@@ -18,6 +19,7 @@ type Vehicle = {
 
 export default function CarCard({ vehicle }: { vehicle: Vehicle }) {
   const [fav, setFav] = useState(false)
+  const { t } = useLanguage()
 
   const photos = [...(vehicle.vehicle_photos ?? [])].sort((a, b) => a.position - b.position)
   const mainPhoto = photos[0]?.url
@@ -28,7 +30,7 @@ export default function CarCard({ vehicle }: { vehicle: Vehicle }) {
         {mainPhoto ? (
           <Image src={mainPhoto} alt={`${vehicle.brand} ${vehicle.model}`} fill style={{ objectFit: 'cover' }} />
         ) : (
-          'Photo véhicule'
+          t.marketplace.photo
         )}
         <div
           className="fav-btn"

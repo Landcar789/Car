@@ -3,37 +3,26 @@
 import { useState, useEffect } from 'react'
 import { AlertCircle } from 'lucide-react'
 import { createClient } from '@/lib/supabase/client'
+import { useLanguage } from '@/lib/LanguageContext'
 
 type Order = {
   id: string
   full_name: string
   deposit_amount: number
   vehicle_price: number
-  vehicles: {
-    id: string
-    brand: string
-    model: string
-  }
+  vehicles: { id: string; brand: string; model: string }
 }
 
-type PaymentSettings = {
-  beneficiary_name: string
-  iban: string
-  bic: string
-}
+type PaymentSettings = { beneficiary_name: string; iban: string; bic: string }
 
 export default function PaymentPage({ order }: { order: Order }) {
+  const { t } = useLanguage()
   const [copied, setCopied] = useState(false)
   const [settings, setSettings] = useState<PaymentSettings | null>(null)
 
   useEffect(() => {
     const supabase = createClient()
-    supabase
-      .from('payment_settings')
-      .select('beneficiary_name, iban, bic')
-      .eq('id', 1)
-      .single()
-      .then(({ data }) => setSettings(data))
+    supabase.from('payment_settings').select('beneficiary_name, iban, bic').eq('id', 1).single().then(({ data }) => setSettings(data))
   }, [])
 
   const reference = order.id.slice(0, 8).toUpperCase()
@@ -52,72 +41,68 @@ export default function PaymentPage({ order }: { order: Order }) {
     <div className="narrow-wrap">
       <div className="narrow-topbar">
         <div style={{ fontFamily: 'Oswald, sans-serif', fontWeight: 700, fontSize: 20, textTransform: 'uppercase' }}>
-          Paiement
+          {t.payment.title}
         </div>
-        <div className="order-tag">Commande <b>CMD-{reference}</b></div>
+        <div className="order-tag">{t.payment.orderLabel} <b>CMD-{reference}</b></div>
       </div>
 
       <div className="achat-steps">
-        <div className="step done">1. Article</div>
-        <div className="step done">2. Formulaire d&apos;achat</div>
-        <div className="step active">3. Paiement de l&apos;acompte</div>
-        <div className="step">4. Confirmation</div>
+        <div className="step done">{t.purchase.step1}</div>
+        <div className="step done">{t.purchase.step2}</div>
+        <div className="step active">{t.payment.step3}</div>
+        <div className="step">{t.payment.step4}</div>
       </div>
 
       <div className="alert-box fade-up d1">
         <AlertCircle size={20} strokeWidth={2} />
-        <p>Votre commande ne sera <b>définitivement validée</b> qu&apos;après réception du virement et vérification de votre reçu.</p>
+        <p>{t.payment.warning}</p>
       </div>
 
       <div className="narrow-card fade-up d1">
-        <h2>Montant à régler</h2>
+        <h2>{t.payment.amountTitle}</h2>
         <div className="amount-due">
-          <span className="label">Acompte (25% du prix — {order.vehicles.brand} {order.vehicles.model})</span>
+          <span className="label">{t.payment.amountLabel} {order.vehicles.brand} {order.vehicles.model})</span>
           <span className="value">{order.deposit_amount.toLocaleString('fr-FR')} €</span>
         </div>
       </div>
 
       <div className="narrow-card fade-up d2">
-        <h2>Coordonnées bancaires</h2>
+        <h2>{t.payment.bankTitle}</h2>
         {settings ? (
           <>
-            <div className="bank-row"><span className="bank-label">Bénéficiaire</span><span className="bank-value">{settings.beneficiary_name}</span></div>
+            <div className="bank-row"><span className="bank-label">{t.payment.beneficiary}</span><span className="bank-value">{settings.beneficiary_name}</span></div>
             <div className="bank-row">
-              <span className="bank-label">IBAN</span>
+              <span className="bank-label">{t.payment.iban}</span>
               <span className="bank-value">
                 {settings.iban}
-                <button className="copy-btn" onClick={handleCopy} type="button">{copied ? 'Copié' : 'Copier'}</button>
+                <button className="copy-btn" onClick={handleCopy} type="button">{copied ? t.payment.copied : t.payment.copy}</button>
               </span>
             </div>
-            <div className="bank-row"><span className="bank-label">BIC / SWIFT</span><span className="bank-value">{settings.bic}</span></div>
-            <div className="bank-row"><span className="bank-label">Référence à indiquer</span><span className="bank-value">CMD-{reference}</span></div>
+            <div className="bank-row"><span className="bank-label">{t.payment.bic}</span><span className="bank-value">{settings.bic}</span></div>
+            <div className="bank-row"><span className="bank-label">{t.payment.reference}</span><span className="bank-value">CMD-{reference}</span></div>
           </>
         ) : (
-          <p style={{ color: 'var(--text-dim)', fontSize: 13 }}>Chargement...</p>
+          <p style={{ color: 'var(--text-dim)', fontSize: 13 }}>{t.payment.loading}</p>
         )}
       </div>
 
       <div className="narrow-card fade-up d3">
-        <h2>Envoyer votre reçu de paiement</h2>
+        <h2>{t.payment.sendReceiptTitle}</h2>
         <p style={{ fontSize: 13.5, color: 'var(--text-dim)', marginBottom: 18 }}>
-          Après avoir effectué le virement, envoyez-nous votre reçu par WhatsApp ou par email en indiquant votre référence <b style={{ color: 'var(--text)' }}>CMD-{reference}</b>.
+          {t.payment.sendReceiptText} <b style={{ color: 'var(--text)' }}>CMD-{reference}</b>.
         </p>
 
         <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
           <a href={whatsappLink} target="_blank" rel="noopener noreferrer" className="btn-whatsapp" style={{ flex: 1, minWidth: 140 }}>
-            Envoyer par WhatsApp
+            {t.payment.sendWhatsapp}
           </a>
           <a href={mailLink} className="btn-primary-confirm" style={{ flex: 1, minWidth: 140 }}>
-            Envoyer par Email
+            {t.payment.sendEmail}
           </a>
         </div>
 
-        <button
-          className="submit-btn"
-          style={{ marginTop: 20 }}
-          onClick={() => { window.location.href = `/confirmation/${order.id}` }}
-        >
-          J&apos;ai envoyé mon reçu
+        <button className="submit-btn" style={{ marginTop: 20 }} onClick={() => { window.location.href = `/confirmation/${order.id}` }}>
+          {t.payment.sentReceipt}
         </button>
       </div>
     </div>

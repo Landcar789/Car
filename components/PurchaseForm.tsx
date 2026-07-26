@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import Image from 'next/image'
 import { createClient } from '@/lib/supabase/client'
+import { useLanguage } from '@/lib/LanguageContext'
 
 type Vehicle = {
   id: string
@@ -17,6 +18,7 @@ type Vehicle = {
 }
 
 export default function PurchaseForm({ vehicle }: { vehicle: Vehicle }) {
+  const { t } = useLanguage()
   const [consent, setConsent] = useState(false)
   const [mode, setMode] = useState<'retrait' | 'livraison'>('retrait')
   const [file, setFile] = useState<File | null>(null)
@@ -30,7 +32,7 @@ export default function PurchaseForm({ vehicle }: { vehicle: Vehicle }) {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     if (!file) {
-      setError("Merci de joindre votre pièce d'identité.")
+      setError(t.purchase.idError)
       return
     }
     setSubmitting(true)
@@ -78,7 +80,7 @@ export default function PurchaseForm({ vehicle }: { vehicle: Vehicle }) {
 
       window.location.href = `/paiement/${order.id}`
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Une erreur est survenue.')
+      setError(err instanceof Error ? err.message : t.purchase.genericError)
       setSubmitting(false)
     }
   }
@@ -87,34 +89,34 @@ export default function PurchaseForm({ vehicle }: { vehicle: Vehicle }) {
     <div className="achat-wrap">
       <div className="achat-topbar">
         <div style={{ fontFamily: 'Oswald, sans-serif', fontWeight: 700, fontSize: 20, textTransform: 'uppercase' }}>
-          Formulaire d&apos;achat
+          {t.purchase.title}
         </div>
-        <div className="order-tag">Véhicule <b>{vehicle.brand} {vehicle.model}</b></div>
+        <div className="order-tag">{t.purchase.vehicleLabel} <b>{vehicle.brand} {vehicle.model}</b></div>
       </div>
 
       <div className="achat-steps">
-        <div className="step done">1. Article</div>
-        <div className="step active">2. Formulaire d&apos;achat</div>
-        <div className="step">3. Acompte 25%</div>
-        <div className="step">4. Paiement complet</div>
+        <div className="step done">{t.purchase.step1}</div>
+        <div className="step active">{t.purchase.step2}</div>
+        <div className="step">{t.purchase.step3}</div>
+        <div className="step">{t.purchase.step4}</div>
       </div>
 
       <div className="achat-grid">
         <form className="achat-card" onSubmit={handleSubmit}>
-          <h2 className="section-title">Informations acheteur</h2>
+          <h2 className="section-title">{t.purchase.buyerInfo}</h2>
           <div className="row2">
-            <div className="field"><label>Nom complet <span className="req">*</span></label><input name="full_name" type="text" placeholder="Ex: Abdoul Kora" required /></div>
-            <div className="field"><label>Email <span className="req">*</span></label><input name="email" type="email" placeholder="vous@email.com" required /></div>
+            <div className="field"><label>{t.purchase.fullName} <span className="req">*</span></label><input name="full_name" type="text" required /></div>
+            <div className="field"><label>{t.purchase.email} <span className="req">*</span></label><input name="email" type="email" required /></div>
           </div>
           <div className="row2">
-            <div className="field"><label>Téléphone <span className="req">*</span></label><input name="phone" type="tel" placeholder="+49 177 8612854" required /></div>
-            <div className="field"><label>Numéro WhatsApp <span className="req">*</span></label><input name="whatsapp" type="tel" placeholder="+49 177 8612854" required /></div>
+            <div className="field"><label>{t.purchase.phone} <span className="req">*</span></label><input name="phone" type="tel" required /></div>
+            <div className="field"><label>{t.purchase.whatsapp} <span className="req">*</span></label><input name="whatsapp" type="tel" required /></div>
           </div>
-          <div className="field"><label>Adresse complète <span className="req">*</span></label><input name="address" type="text" placeholder="Rue, ville, pays" required /></div>
+          <div className="field"><label>{t.purchase.address} <span className="req">*</span></label><input name="address" type="text" placeholder={t.purchase.addressPlaceholder} required /></div>
           <div className="field">
-            <label>Pièce d&apos;identité (photo ou scan) <span className="req">*</span></label>
+            <label>{t.purchase.idDoc} <span className="req">*</span></label>
             <label className={`upload-box ${file ? 'has-file' : ''}`}>
-              {file ? `✅ ${file.name}` : '📎 Cliquer pour joindre un fichier (CNI, passeport...)'}
+              {file ? `✅ ${file.name}` : t.purchase.idDocPlaceholder}
               <input
                 type="file"
                 accept="image/*,.pdf"
@@ -124,36 +126,34 @@ export default function PurchaseForm({ vehicle }: { vehicle: Vehicle }) {
             </label>
           </div>
 
-          <h2 className="section-title">Récupération</h2>
+          <h2 className="section-title">{t.purchase.pickup}</h2>
           <div className="field">
-            <label>Mode de récupération</label>
+            <label>{t.purchase.pickupMode}</label>
             <div className="radio-group">
               <label className={`radio-pill ${mode === 'retrait' ? 'checked' : ''}`}>
                 <input type="radio" name="pickup_mode_display" checked={mode === 'retrait'} onChange={() => setMode('retrait')} />
-                Retrait sur place
+                {t.purchase.onSite}
               </label>
               <label className={`radio-pill ${mode === 'livraison' ? 'checked' : ''}`}>
                 <input type="radio" name="pickup_mode_display" checked={mode === 'livraison'} onChange={() => setMode('livraison')} />
-                Livraison
+                {t.purchase.delivery}
               </label>
             </div>
           </div>
-          <div className="field"><label>Date souhaitée</label><input name="desired_date" type="date" /></div>
+          <div className="field"><label>{t.purchase.desiredDate}</label><input name="desired_date" type="date" /></div>
 
-          <h2 className="section-title">Informations complémentaires</h2>
-          <div className="field"><label>Commentaire (optionnel)</label><textarea name="comment" rows={3} placeholder="Précision, question sur l'état du véhicule..." /></div>
+          <h2 className="section-title">{t.purchase.moreInfo}</h2>
+          <div className="field"><label>{t.purchase.comment}</label><textarea name="comment" rows={3} placeholder={t.purchase.commentPlaceholder} /></div>
 
           <div className="consent">
             <input type="checkbox" id="consent" checked={consent} onChange={(e) => setConsent(e.target.checked)} />
-            <label htmlFor="consent">
-              J&apos;ai bien compris que je dois régler <b>25% du montant total</b> pour valider ma commande, avant de passer au paiement intégral.
-            </label>
+            <label htmlFor="consent">{t.purchase.consent}</label>
           </div>
 
           {error && <p style={{ color: 'crimson', fontSize: 13, marginTop: 12 }}>{error}</p>}
 
           <button className="submit-btn" disabled={!consent || submitting} type="submit">
-            {submitting ? 'Envoi en cours...' : "Valider l'achat"}
+            {submitting ? t.purchase.submitting : t.purchase.submit}
           </button>
         </form>
 
@@ -162,7 +162,7 @@ export default function PurchaseForm({ vehicle }: { vehicle: Vehicle }) {
             {photos[0] ? (
               <Image src={photos[0].url} alt={`${vehicle.brand} ${vehicle.model}`} fill style={{ objectFit: 'cover' }} />
             ) : (
-              'Photo du véhicule'
+              t.purchase.photo
             )}
           </div>
           <p className="car-name">{vehicle.brand} {vehicle.model} {vehicle.year}</p>
@@ -170,12 +170,12 @@ export default function PurchaseForm({ vehicle }: { vehicle: Vehicle }) {
             {[vehicle.fuel, vehicle.transmission, vehicle.mileage_km ? `${vehicle.mileage_km.toLocaleString('fr-FR')} km` : null].filter(Boolean).join(' · ')}
           </p>
 
-          <div className="price-row"><span>Prix du véhicule</span><b>{vehicle.price_eur.toLocaleString('fr-FR')} €</b></div>
-          <div className="price-row"><span>Frais de dossier</span><b>0 €</b></div>
-          <div className="price-row total"><span>Total</span><b>{vehicle.price_eur.toLocaleString('fr-FR')} €</b></div>
+          <div className="price-row"><span>{t.purchase.vehiclePrice}</span><b>{vehicle.price_eur.toLocaleString('fr-FR')} €</b></div>
+          <div className="price-row"><span>{t.purchase.fees}</span><b>0 €</b></div>
+          <div className="price-row total"><span>{t.purchase.total}</span><b>{vehicle.price_eur.toLocaleString('fr-FR')} €</b></div>
 
           <div className="gauge-wrap">
-            <div className="gauge-label">Acompte requis pour valider</div>
+            <div className="gauge-label">{t.purchase.depositRequired}</div>
             <svg width="180" height="100" viewBox="0 0 180 100">
               <path d="M 15 90 A 75 75 0 0 1 165 90" fill="none" stroke="#e2e0d8" strokeWidth="14" strokeLinecap="round" />
               <path d="M 15 90 A 75 75 0 0 1 68 22" fill="none" stroke="#c9a227" strokeWidth="14" strokeLinecap="round" />
@@ -184,7 +184,7 @@ export default function PurchaseForm({ vehicle }: { vehicle: Vehicle }) {
             <div className="gauge-value">25% = <b>{acompte.toLocaleString('fr-FR')} €</b></div>
           </div>
 
-          <div className="note">Reste à payer après validation de l&apos;acompte : <b style={{ color: 'var(--text)' }}>{reste.toLocaleString('fr-FR')} €</b></div>
+          <div className="note">{t.purchase.remaining} <b style={{ color: 'var(--text)' }}>{reste.toLocaleString('fr-FR')} €</b></div>
         </div>
       </div>
     </div>

@@ -469,3 +469,10 @@ h2.section-title {
 .admin-btn { background: var(--petrol); color: #fff; border: none; padding: 8px 14px; border-radius: 6px; font-size: 12.5px; font-weight: 600; cursor: pointer; }
 .admin-btn:disabled { background: var(--surface-2); color: var(--text-dim); cursor: not-allowed; }
 .admin-input-small { padding: 6px 8px; border: 1px solid var(--line); border-radius: 5px; font-size: 12.5px; width: 100%; }
+.lang-switch { display: inline-flex; gap: 2px; align-items: center; }
+.lang-switch button {
+  background: transparent; border: none; cursor: pointer; font-size: 15px; font-weight: 700;
+  color: #e8f2ef; opacity: 0.45; padding: 3px 7px; border-radius: 4px; line-height: 1;
+  font-family: 'Inter', sans-serif;
+}
+.lang-switch button.active { opacity: 1; background: rgba(255,255,255,0.15); }

@@ -2,8 +2,12 @@
 
 import { useState } from 'react'
 import { createClient } from '@/lib/supabase/client'
+import Header from '@/components/Header'
+import Footer from '@/components/Footer'
+import { useLanguage } from '@/lib/LanguageContext'
 
 export default function InscriptionPage() {
+  const { t } = useLanguage()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [loading, setLoading] = useState(false)
@@ -29,45 +33,46 @@ export default function InscriptionPage() {
     if (error) {
       setMessage({ type: 'error', text: error.message })
     } else {
-      setMessage({
-        type: 'success',
-        text: 'Compte créé ! Vérifie ta boîte mail et clique sur le lien de confirmation.',
-      })
+      setMessage({ type: 'success', text: t.auth.signupSuccess })
     }
   }
 
   return (
-    <main style={{ maxWidth: 400, margin: '60px auto', fontFamily: 'sans-serif' }}>
-      <h1>Inscription</h1>
+    <>
+      <Header />
+      <main style={{ maxWidth: 400, margin: '60px auto', padding: '0 24px', fontFamily: 'Inter, sans-serif' }}>
+        <h1 style={{ fontFamily: 'Oswald, sans-serif' }}>{t.auth.signupTitle}</h1>
 
-      <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-        <input
-          type="email"
-          placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-          style={{ padding: 10, fontSize: 16 }}
-        />
-        <input
-          type="password"
-          placeholder="Mot de passe (min. 6 caractères)"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-          minLength={6}
-          style={{ padding: 10, fontSize: 16 }}
-        />
-        <button type="submit" disabled={loading} style={{ padding: 10, fontSize: 16 }}>
-          {loading ? 'Création en cours...' : "S'inscrire"}
-        </button>
-      </form>
+        <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+          <input
+            type="email"
+            placeholder={t.auth.email}
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+            style={{ padding: 10, fontSize: 16 }}
+          />
+          <input
+            type="password"
+            placeholder={t.auth.passwordMin}
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+            minLength={6}
+            style={{ padding: 10, fontSize: 16 }}
+          />
+          <button type="submit" disabled={loading} style={{ padding: 10, fontSize: 16 }}>
+            {loading ? t.auth.signupLoading : t.auth.signupBtn}
+          </button>
+        </form>
 
-      {message && (
-        <p style={{ color: message.type === 'success' ? 'green' : 'crimson', marginTop: 16 }}>
-          {message.text}
-        </p>
-      )}
-    </main>
+        {message && (
+          <p style={{ color: message.type === 'success' ? 'green' : 'crimson', marginTop: 16 }}>
+            {message.text}
+          </p>
+        )}
+      </main>
+      <Footer />
+    </>
   )
 }
