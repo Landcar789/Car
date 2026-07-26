@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
+import { usePathname } from 'next/navigation'
 import { Menu, User } from 'lucide-react'
 import { createClient } from '@/lib/supabase/client'
 import { useLanguage } from '@/lib/LanguageContext'
@@ -11,6 +12,9 @@ export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false)
   const [userEmail, setUserEmail] = useState<string | null>(null)
   const { lang, setLang, t } = useLanguage()
+  const pathname = usePathname()
+
+  const onAuthPage = pathname === '/connexion' || pathname === '/inscription'
 
   useEffect(() => {
     const supabase = createClient()
@@ -71,7 +75,7 @@ export default function Header() {
             {t.header.myAccount}
           </Link>
         ) : (
-          <Link href="/connexion" className="login-btn">{t.header.login}</Link>
+          !onAuthPage && <Link href="/connexion" className="login-btn">{t.header.login}</Link>
         )}
       </header>
     </>
