@@ -4,6 +4,7 @@ import { useState } from 'react'
 import Image from 'next/image'
 import { ShieldCheck } from 'lucide-react'
 import { useLanguage } from '@/lib/LanguageContext'
+import FavoriteButton from '@/components/FavoriteButton'
 
 type Vehicle = {
   id: string
@@ -20,7 +21,6 @@ type Vehicle = {
 
 export default function VehicleDetail({ vehicle }: { vehicle: Vehicle }) {
   const [activeThumb, setActiveThumb] = useState(0)
-  const [fav, setFav] = useState(false)
   const { t } = useLanguage()
 
   const photos = [...(vehicle.vehicle_photos ?? [])].sort((a, b) => a.position - b.position)
@@ -76,9 +76,7 @@ export default function VehicleDetail({ vehicle }: { vehicle: Vehicle }) {
 
         <div className="btn-row">
           <a href={`/achat/${vehicle.id}`} className="btn-buy">{t.vehicle.buy}</a>
-          <button className={`btn-fav ${fav ? 'active' : ''}`} onClick={() => setFav(!fav)}>
-            {fav ? '♥' : '♡'}
-          </button>
+          <FavoriteButton vehicleId={vehicle.id} className="btn-fav" />
         </div>
 
         <div className="trust-note">

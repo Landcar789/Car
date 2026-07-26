@@ -12,10 +12,26 @@ export default async function ComptePage() {
     redirect('/connexion')
   }
 
+  const { data: favorites } = await supabase
+    .from('favorites')
+    .select('vehicle_id, vehicles(id, brand, model, year, price_eur, vehicle_photos(url, position))')
+    .eq('user_id', user.id)
+    .order('created_at', { ascending: false })
+
+  const { data: orders } = await supabase
+    .from('orders')
+    .select('id, created_at, status, vehicle_price, deposit_amount, vehicles(brand, model, year)')
+    .eq('user_id', user.id)
+    .order('created_at', { ascending: false })
+
   return (
     <>
       <Header />
-      <AccountContent email={user.email ?? ''} />
+      <AccountContent
+        email={user.email ?? ''}
+        favorites={favorites ?? []}
+        orders={orders ?? []}
+      />
       <Footer />
     </>
   )

@@ -207,7 +207,16 @@ export const fr = {
   account: {
     title: 'Mon compte',
     connectedAs: 'Connecté en tant que :',
-    soon: 'Vos favoris et commandes s\'afficheront ici prochainement.',
     logout: 'Se déconnecter',
+    favoritesTitle: 'Mes favoris',
+    noFavorites: 'Vous n\'avez pas encore de favoris.',
+    ordersTitle: 'Mes commandes',
+    noOrders: 'Vous n\'avez pas encore de commande.',
+    orderDate: 'Commande du',
+    orderStatus: 'Statut',
+    statusPending: 'En attente',
+    statusConfirmed: 'Confirmée',
+    viewVehicle: 'Voir le véhicule',
+    loginToFav: 'Connectez-vous ou créez un compte pour ajouter ce véhicule à vos favoris.',
   },
 }

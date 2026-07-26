@@ -1,9 +1,9 @@
 'use client'
 
-import { useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { useLanguage } from '@/lib/LanguageContext'
+import FavoriteButton from '@/components/FavoriteButton'
 
 type Vehicle = {
   id: string
@@ -18,7 +18,6 @@ type Vehicle = {
 }
 
 export default function CarCard({ vehicle }: { vehicle: Vehicle }) {
-  const [fav, setFav] = useState(false)
   const { t } = useLanguage()
 
   const photos = [...(vehicle.vehicle_photos ?? [])].sort((a, b) => a.position - b.position)
@@ -32,16 +31,7 @@ export default function CarCard({ vehicle }: { vehicle: Vehicle }) {
         ) : (
           t.marketplace.photo
         )}
-        <div
-          className="fav-btn"
-          onClick={(e) => {
-            e.preventDefault()
-            e.stopPropagation()
-            setFav(!fav)
-          }}
-        >
-          {fav ? '♥' : '♡'}
-        </div>
+        <FavoriteButton vehicleId={vehicle.id} className="fav-btn" />
       </div>
       <div className="car-body">
         <p className="car-name">{vehicle.brand} {vehicle.model} {vehicle.year}</p>
