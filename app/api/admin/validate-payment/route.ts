@@ -14,18 +14,20 @@ export async function POST(request: Request) {
   const { orderId, paymentId } = await request.json()
   const admin = createAdminClient()
 
-  const { error: e1 } = await admin
-    .from('payments')
-    .update({ status: 'verified', verified_at: new Date().toISOString() })
-    .eq('id', paymentId)
+  if (paymentId) {
+    await admin
+      .from('payments')
+      .update({ status: 'verified', verified_at: new Date().toISOString() })
+      .eq('id', paymentId)
+  }
 
-  const { error: e2 } = await admin
+  const { error } = await admin
     .from('orders')
     .update({ status: 'confirmed' })
     .eq('id', orderId)
 
-  if (e1 || e2) {
-    return NextResponse.json({ error: (e1 || e2)?.message }, { status: 500 })
+  if (error) {
+    return NextResponse.json({ error: error.message }, { status: 500 })
   }
 
   return NextResponse.json({ success: true })
