@@ -59,13 +59,10 @@ export default function Header() {
             <Image src="/assets/logo.jpg" alt="Deutschland Auto Car" width={70} height={90} style={{ objectFit: 'contain', height: 64, width: 'auto' }} priority />
           </Link>
           <div className={`side-menu ${menuOpen ? 'open' : ''}`}>
-            <Link href="/faq" onClick={() => setMenuOpen(false)}>{t.header.contact}</Link>
-            <Link href="/faq" onClick={() => setMenuOpen(false)}>{t.header.afterSales}</Link>
             <Link href="/compte" onClick={() => setMenuOpen(false)}>{t.header.favorites}</Link>
             <Link href="/compte" onClick={() => setMenuOpen(false)}>{t.header.orders}</Link>
             <div className="divider"></div>
             <Link href="/faq" onClick={() => setMenuOpen(false)}>{t.header.faq}</Link>
-            <Link href="/faq" onClick={() => setMenuOpen(false)}>{t.header.help}</Link>
           </div>
         </div>
 
