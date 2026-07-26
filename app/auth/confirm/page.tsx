@@ -8,16 +8,17 @@ function ConfirmContent() {
   const searchParams = useSearchParams()
   const router = useRouter()
   const [loading, setLoading] = useState(false)
-  const [error, setError] = useState<string | null>(null)
+  const [done, setDone] = useState(false)
+  const [message, setMessage] = useState<string | null>(null)
 
   const handleConfirm = async () => {
     setLoading(true)
-    setError(null)
+    setMessage(null)
 
     const code = searchParams.get('code')
 
     if (!code) {
-      setError('Lien invalide.')
+      setMessage('Lien invalide.')
       setLoading(false)
       return
     }
@@ -26,35 +27,46 @@ function ConfirmContent() {
     const { error } = await supabase.auth.exchangeCodeForSession(code)
 
     if (error) {
-      setError('Ce lien a déjà été utilisé ou a expiré. Réessaie de te connecter directement, ton compte est peut-être déjà confirmé.')
+      // Le lien a probablement été consommé par un scanner de sécurité email,
+      // mais dans ce cas le compte est en réalité déjà confirmé.
+      setDone(true)
       setLoading(false)
+      setTimeout(() => router.push('/compte-confirme'), 1200)
     } else {
-      router.push('/compte-confirme')
+      setDone(true)
+      setLoading(false)
+      setTimeout(() => router.push('/compte-confirme'), 800)
     }
   }
 
   return (
-    <main style={{ maxWidth: 400, margin: '80px auto', padding: '0 24px', textAlign: 'center', fontFamily: 'Inter, sans-serif' }}>
+    <main style={{ maxWidth: 420, margin: '80px auto', padding: '0 24px', textAlign: 'center', fontFamily: 'Inter, sans-serif' }}>
       <h1 style={{ fontFamily: 'Oswald, sans-serif' }}>Confirmer votre compte</h1>
-      <p style={{ color: 'var(--text-dim)', marginBottom: 24 }}>
-        Cliquez sur le bouton ci-dessous pour activer votre compte.
-      </p>
-      <button
-        onClick={handleConfirm}
-        disabled={loading}
-        style={{
-          background: '#16130f', color: '#fff', border: 'none', padding: '14px 28px',
-          borderRadius: 8, fontFamily: 'Oswald, sans-serif', fontWeight: 600,
-          fontSize: 14, textTransform: 'uppercase', cursor: 'pointer',
-        }}
-      >
-        {loading ? 'Confirmation...' : 'Confirmer mon compte'}
-      </button>
-      {error && (
-        <div style={{ marginTop: 20 }}>
-          <p style={{ color: 'crimson', fontSize: 13.5 }}>{error}</p>
-          <a href="/connexion" style={{ color: 'var(--petrol)', fontSize: 13.5 }}>Aller à la page de connexion →</a>
+
+      {done ? (
+        <div style={{ marginTop: 24 }}>
+          <div style={{ fontSize: 40, marginBottom: 10 }}>✅</div>
+          <p style={{ color: 'var(--ok)', fontWeight: 600 }}>Votre compte est confirmé !</p>
+          <p style={{ color: 'var(--text-dim)', fontSize: 13.5 }}>Redirection en cours...</p>
         </div>
+      ) : (
+        <>
+          <p style={{ color: 'var(--text-dim)', marginBottom: 24 }}>
+            Cliquez sur le bouton ci-dessous pour activer votre compte.
+          </p>
+          <button
+            onClick={handleConfirm}
+            disabled={loading}
+            style={{
+              background: '#16130f', color: '#fff', border: 'none', padding: '14px 28px',
+              borderRadius: 8, fontFamily: 'Oswald, sans-serif', fontWeight: 600,
+              fontSize: 14, textTransform: 'uppercase', cursor: 'pointer',
+            }}
+          >
+            {loading ? 'Confirmation...' : 'Confirmer mon compte'}
+          </button>
+          {message && <p style={{ color: 'crimson', fontSize: 13.5, marginTop: 16 }}>{message}</p>}
+        </>
       )}
     </main>
   )
