@@ -5,17 +5,21 @@ import Image from 'next/image'
 import { useLanguage } from '@/lib/LanguageContext'
 import LogoutButton from '@/components/LogoutButton'
 
+type VehicleData = {
+  id: string
+  brand: string
+  model: string
+  year: number | null
+  price_eur: number
+  vehicle_photos?: { url: string; position: number }[]
+}
+
 type Favorite = {
   vehicle_id: string
-  vehicles: {
-    id: string
-    brand: string
-    model: string
-    year: number | null
-    price_eur: number
-    vehicle_photos?: { url: string; position: number }[]
-  } | null
+  vehicles: VehicleData | VehicleData[] | null
 }
+
+type OrderVehicle = { brand: string; model: string; year: number | null }
 
 type Order = {
   id: string
@@ -23,7 +27,7 @@ type Order = {
   status: string
   vehicle_price: number
   deposit_amount: number
-  vehicles: { brand: string; model: string; year: number | null } | null
+  vehicles: OrderVehicle | OrderVehicle[] | null
 }
 
 export default function AccountContent({
@@ -50,7 +54,7 @@ export default function AccountContent({
       ) : (
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(240px, 1fr))', gap: 16 }}>
           {favorites.map((f) => {
-            const v = f.vehicles
+            const v = Array.isArray(f.vehicles) ? f.vehicles[0] : f.vehicles
             if (!v) return null
             const photos = [...(v.vehicle_photos ?? [])].sort((a, b) => a.position - b.position)
             return (
@@ -81,12 +85,13 @@ export default function AccountContent({
           {orders.map((order) => {
             const reference = order.id.slice(0, 8).toUpperCase()
             const isConfirmed = order.status === 'confirmed'
+            const ov = Array.isArray(order.vehicles) ? order.vehicles[0] : order.vehicles
             return (
               <div key={order.id} style={{ background: 'var(--surface)', border: '1px solid var(--line)', borderRadius: 12, padding: 18 }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', gap: 8 }}>
                   <div>
                     <p style={{ fontFamily: 'Oswald, sans-serif', fontWeight: 600, margin: '0 0 4px' }}>
-                      {order.vehicles?.brand} {order.vehicles?.model} {order.vehicles?.year}
+                      {ov?.brand ?? ''} {ov?.model ?? ''} {ov?.year ?? ''}
                     </p>
                     <p style={{ fontSize: 12.5, color: 'var(--text-dim)', margin: 0 }}>
                       CMD-{reference} · {t.account.orderDate} {new Date(order.created_at).toLocaleDateString('fr-FR')}
