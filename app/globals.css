@@ -515,3 +515,10 @@ h2.section-title {
     left: 16px;
   }
 }
+.filterbar select {
+  color: #1c2a2e;
+}
+.filterbar select option {
+  background: #ffffff !important;
+  color: #1c2a2e !important;
+}

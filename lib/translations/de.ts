@@ -61,6 +61,9 @@ export const de = {
     availablePlural: 'verfügbar',
     none: 'Derzeit sind keine Fahrzeuge verfügbar.',
     photo: 'Fahrzeugfoto',
+    priceAsc: 'Preis aufsteigend',
+    priceDesc: 'Preis absteigend',
+    reset: 'Zurücksetzen',
   },
   faq: {
     eyebrow: 'Brauchen Sie Hilfe?',
