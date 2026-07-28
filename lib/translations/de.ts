@@ -129,6 +129,8 @@ export const de = {
     confirmedTitle: 'Konto bestätigt',
     confirmedText: 'Ihr Konto ist aktiviert. Sie können sich jetzt anmelden.',
     goToLogin: 'Anmelden',
+    alreadyConnected: 'Ihr Konto ist bestätigt und Sie sind angemeldet!',
+    goHome: 'Zur Startseite',
   },
   purchase: {
     title: 'Kaufformular',
