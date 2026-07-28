@@ -19,7 +19,7 @@ type Order = {
 type PaymentSettings = { beneficiary_name: string; iban: string; bic: string }
 
 export default function PaymentPage({ order }: { order: Order }) {
-  const { t } = useLanguage()
+  const { t, lang } = useLanguage()
   const [copied, setCopied] = useState(false)
   const [settings, setSettings] = useState<PaymentSettings | null>(null)
 
@@ -120,6 +120,7 @@ export default function PaymentPage({ order }: { order: Order }) {
                 vehicleName: `${order.vehicles.brand} ${order.vehicles.model} ${order.vehicles.year ?? ''}`.trim(),
                 vehiclePrice: order.vehicle_price,
                 depositAmount: order.deposit_amount,
+                lang,
               }),
             }).catch((e) => console.error('Email reçu non envoyé:', e))
 

@@ -18,7 +18,7 @@ type Vehicle = {
 }
 
 export default function PurchaseForm({ vehicle }: { vehicle: Vehicle }) {
-  const { t } = useLanguage()
+  const { t, lang } = useLanguage()
   const [consent, setConsent] = useState(false)
   const [mode, setMode] = useState<'retrait' | 'livraison'>('retrait')
   const [file, setFile] = useState<File | null>(null)
@@ -83,7 +83,7 @@ export default function PurchaseForm({ vehicle }: { vehicle: Vehicle }) {
       fetch('/api/send-order-emails', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
+        bbody: JSON.stringify({
           reference,
           fullName: order.full_name,
           email: order.email,
@@ -92,6 +92,7 @@ export default function PurchaseForm({ vehicle }: { vehicle: Vehicle }) {
           vehicleName: `${vehicle.brand} ${vehicle.model} ${vehicle.year ?? ''}`.trim(),
           vehiclePrice: vehicle.price_eur,
           depositAmount: acompte,
+          lang,
         }),
       }).catch((e) => console.error('Email non envoyé:', e))
 
