@@ -78,6 +78,23 @@ export default function PurchaseForm({ vehicle }: { vehicle: Vehicle }) {
 
       if (orderError) throw orderError
 
+      // Envoyer les emails de notification (gérant + client)
+      const reference = order.id.slice(0, 8).toUpperCase()
+      fetch('/api/send-order-emails', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          reference,
+          fullName: order.full_name,
+          email: order.email,
+          phone: order.phone,
+          whatsapp: order.whatsapp,
+          vehicleName: `${vehicle.brand} ${vehicle.model} ${vehicle.year ?? ''}`.trim(),
+          vehiclePrice: vehicle.price_eur,
+          depositAmount: acompte,
+        }),
+      }).catch((e) => console.error('Email non envoyé:', e))
+
       window.location.href = `/paiement/${order.id}`
     } catch (err) {
       setError(err instanceof Error ? err.message : t.purchase.genericError)
