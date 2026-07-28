@@ -10,7 +10,7 @@ export default async function PaiementRoute({ params }: { params: Promise<{ id: 
 
   const { data: order } = await supabase
     .from('orders')
-    .select('*, vehicles(id, brand, model)')
+    .select('*, vehicles(id, brand, model, year)')
     .eq('id', id)
     .single()
 

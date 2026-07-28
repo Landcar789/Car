@@ -69,3 +69,46 @@ export async function sendClientConfirmation(order: OrderInfo) {
     console.error('Erreur envoi email client :', err)
   }
 }
+// Email au gérant : le client a déclaré avoir envoyé son reçu
+export async function sendManagerReceiptAlert(order: OrderInfo) {
+  try {
+    await resend.emails.send({
+      from: FROM,
+      to: MANAGER_EMAIL,
+      subject: `Reçu envoyé — CMD-${order.reference} à vérifier`,
+      html: `
+        <h2>Un client a envoyé son reçu de paiement</h2>
+        <p>Le client indique avoir effectué le virement pour la commande suivante. Vérifiez votre WhatsApp ou votre boîte mail pour retrouver le reçu, puis validez la commande dans le tableau de bord.</p>
+        <p><strong>Référence :</strong> CMD-${order.reference}</p>
+        <p><strong>Véhicule :</strong> ${order.vehicleName}</p>
+        <p><strong>Acompte attendu :</strong> ${order.depositAmount.toLocaleString('fr-FR')} €</p>
+        <hr>
+        <p><strong>Client :</strong> ${order.fullName}</p>
+        <p><strong>Email :</strong> ${order.email}</p>
+        <p><strong>WhatsApp :</strong> ${order.whatsapp}</p>
+      `,
+    })
+  } catch (err) {
+    console.error('Erreur envoi alerte reçu gérant :', err)
+  }
+}
+
+// Email au client : accusé de réception de sa déclaration d'envoi de reçu
+export async function sendClientReceiptAck(order: OrderInfo) {
+  try {
+    await resend.emails.send({
+      from: FROM,
+      to: order.email,
+      subject: `Nous avons bien noté l'envoi de votre reçu — CMD-${order.reference}`,
+      html: `
+        <h2>Merci !</h2>
+        <p>Bonjour ${order.fullName},</p>
+        <p>Nous avons bien noté que vous avez envoyé votre reçu de paiement pour la commande <strong>CMD-${order.reference}</strong> (${order.vehicleName}).</p>
+        <p>Notre équipe vérifie votre paiement et vous recevrez une confirmation définitive sous 24 à 48h ouvrées.</p>
+        <p>Merci de votre confiance,<br>L'équipe Deutschland Auto Car</p>
+      `,
+    })
+  } catch (err) {
+    console.error('Erreur envoi accusé reçu client :', err)
+  }
+}

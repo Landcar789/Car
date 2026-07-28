@@ -8,9 +8,12 @@ import { useLanguage } from '@/lib/LanguageContext'
 type Order = {
   id: string
   full_name: string
+  email: string
+  phone: string
+  whatsapp: string
   deposit_amount: number
   vehicle_price: number
-  vehicles: { id: string; brand: string; model: string }
+  vehicles: { id: string; brand: string; model: string; year?: number | null }
 }
 
 type PaymentSettings = { beneficiary_name: string; iban: string; bic: string }
@@ -101,7 +104,28 @@ export default function PaymentPage({ order }: { order: Order }) {
           </a>
         </div>
 
-        <button className="submit-btn" style={{ marginTop: 20 }} onClick={() => { window.location.href = `/confirmation/${order.id}` }}>
+        <button
+          className="submit-btn"
+          style={{ marginTop: 20 }}
+          onClick={() => {
+            fetch('/api/send-receipt-emails', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                reference,
+                fullName: order.full_name,
+                email: order.email,
+                phone: order.phone,
+                whatsapp: order.whatsapp,
+                vehicleName: `${order.vehicles.brand} ${order.vehicles.model} ${order.vehicles.year ?? ''}`.trim(),
+                vehiclePrice: order.vehicle_price,
+                depositAmount: order.deposit_amount,
+              }),
+            }).catch((e) => console.error('Email reçu non envoyé:', e))
+
+            window.location.href = `/confirmation/${order.id}`
+          }}
+        >
           {t.payment.sentReceipt}
         </button>
       </div>
