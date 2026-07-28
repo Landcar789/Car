@@ -83,7 +83,7 @@ export default function PurchaseForm({ vehicle }: { vehicle: Vehicle }) {
       fetch('/api/send-order-emails', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        bbody: JSON.stringify({
+        body: JSON.stringify({
           reference,
           fullName: order.full_name,
           email: order.email,
