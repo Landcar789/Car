@@ -126,6 +126,9 @@ export const fr = {
     noAccount: 'Pas encore de compte ?',
     signupLink: 'S\'inscrire',
     signupSuccess: 'Compte créé ! Vérifie ta boîte mail et clique sur le lien de confirmation.',
+    confirmedTitle: 'Compte confirmé',
+    confirmedText: 'Votre compte est activé. Vous pouvez maintenant vous connecter.',
+    goToLogin: 'Se connecter',
   },
   purchase: {
     title: 'Formulaire d\'achat',
