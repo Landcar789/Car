@@ -33,7 +33,7 @@ export default function InscriptionPage() {
     if (error) {
       setMessage({ type: 'error', text: error.message })
     } else {
-      setMessage({ type: 'success', text: t.auth.signupSuccess })
+      setMessage({ type: 'success', text: t.auth.signupSuccessFull })
     }
   }
 
@@ -71,6 +71,9 @@ export default function InscriptionPage() {
             {message.text}
           </p>
         )}
+        <p style={{ marginTop: 20 }}>
+          {t.auth.alreadyHaveAccount} <a href="/connexion">{t.auth.loginBtn}</a>
+        </p>
       </main>
       <Footer />
     </>

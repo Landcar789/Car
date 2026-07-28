@@ -131,6 +131,8 @@ export const fr = {
     goToLogin: 'Se connecter',
     alreadyConnected: 'Votre compte est confirmé et vous êtes connecté !',
     goHome: 'Aller à l\'accueil',
+    signupSuccessFull: 'Vérifiez votre boîte mail : si aucun compte n\'existe déjà avec cette adresse, vous recevrez un lien de confirmation. Si vous avez déjà un compte, connectez-vous directement.',
+    alreadyHaveAccount: 'Déjà un compte ?',
   },
   purchase: {
     title: 'Formulaire d\'achat',

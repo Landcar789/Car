@@ -131,6 +131,8 @@ export const de = {
     goToLogin: 'Anmelden',
     alreadyConnected: 'Ihr Konto ist bestätigt und Sie sind angemeldet!',
     goHome: 'Zur Startseite',
+    signupSuccessFull: 'Überprüfen Sie Ihre E-Mails: Falls noch kein Konto mit dieser Adresse besteht, erhalten Sie einen Bestätigungslink. Wenn Sie bereits ein Konto haben, melden Sie sich direkt an.',
+    alreadyHaveAccount: 'Bereits ein Konto?',
   },
   purchase: {
     title: 'Kaufformular',
