@@ -112,6 +112,17 @@ export const fr = {
     buy: 'Acheter',
     warrantyNote: 'Garantie de 24 mois incluse · Livraison sous 7 jours',
     mainPhoto: 'Photo principale du véhicule',
+    fuelValues: {
+      'Essence': 'Essence',
+      'Diesel': 'Diesel',
+      'Hybride Essence': 'Hybride Essence',
+      'Électrique': 'Électrique',
+      'Hybride': 'Hybride',
+    } as Record<string, string>,
+    transValues: {
+      'Automatique': 'Automatique',
+      'Manuelle': 'Manuelle',
+    } as Record<string, string>,
   },
   auth: {
     loginTitle: 'Connexion',

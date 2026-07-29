@@ -4,6 +4,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { useLanguage } from '@/lib/LanguageContext'
 import FavoriteButton from '@/components/FavoriteButton'
+import { translateFuel, translateTrans } from '@/lib/vehicleLabels'
 
 type Vehicle = {
   id: string
@@ -36,7 +37,7 @@ export default function CarCard({ vehicle }: { vehicle: Vehicle }) {
       <div className="car-body">
         <p className="car-name">{vehicle.brand} {vehicle.model} {vehicle.year}</p>
         <p className="car-meta">
-          {[vehicle.fuel, vehicle.transmission, vehicle.mileage_km ? `${vehicle.mileage_km.toLocaleString('fr-FR')} km` : null]
+          {[translateFuel(t.vehicle, vehicle.fuel), translateTrans(t.vehicle, vehicle.transmission), vehicle.mileage_km ? `${vehicle.mileage_km.toLocaleString('fr-FR')} km` : null]
             .filter(Boolean)
             .join(' · ')}
         </p>

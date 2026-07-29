@@ -4,6 +4,7 @@ import { useState } from 'react'
 import Image from 'next/image'
 import { createClient } from '@/lib/supabase/client'
 import { useLanguage } from '@/lib/LanguageContext'
+import { translateFuel, translateTrans } from '@/lib/vehicleLabels'
 
 type Vehicle = {
   id: string
@@ -185,7 +186,7 @@ export default function PurchaseForm({ vehicle }: { vehicle: Vehicle }) {
           </div>
           <p className="car-name">{vehicle.brand} {vehicle.model} {vehicle.year}</p>
           <p className="car-meta">
-            {[vehicle.fuel, vehicle.transmission, vehicle.mileage_km ? `${vehicle.mileage_km.toLocaleString('fr-FR')} km` : null].filter(Boolean).join(' · ')}
+            {[translateFuel(t.vehicle, vehicle.fuel), translateTrans(t.vehicle, vehicle.transmission), vehicle.mileage_km ? `${vehicle.mileage_km.toLocaleString('fr-FR')} km` : null].filter(Boolean).join(' · ')}
           </p>
 
           <div className="price-row"><span>{t.purchase.vehiclePrice}</span><b>{vehicle.price_eur.toLocaleString('fr-FR')} €</b></div>

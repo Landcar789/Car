@@ -5,6 +5,7 @@ import Image from 'next/image'
 import { ShieldCheck } from 'lucide-react'
 import { useLanguage } from '@/lib/LanguageContext'
 import FavoriteButton from '@/components/FavoriteButton'
+import { translateFuel, translateTrans } from '@/lib/vehicleLabels'
 
 type Vehicle = {
   id: string
@@ -60,8 +61,8 @@ export default function VehicleDetail({ vehicle }: { vehicle: Vehicle }) {
             <div className="spec-item"><span className="spec-label">{t.vehicle.model}</span><span className="spec-value">{vehicle.model}</span></div>
             <div className="spec-item"><span className="spec-label">{t.vehicle.year}</span><span className="spec-value">{vehicle.year ?? '—'}</span></div>
             <div className="spec-item"><span className="spec-label">{t.vehicle.mileage}</span><span className="spec-value">{vehicle.mileage_km ? `${vehicle.mileage_km.toLocaleString('fr-FR')} km` : '—'}</span></div>
-            <div className="spec-item"><span className="spec-label">{t.vehicle.fuel}</span><span className="spec-value">{vehicle.fuel ?? '—'}</span></div>
-            <div className="spec-item"><span className="spec-label">{t.vehicle.transmission}</span><span className="spec-value">{vehicle.transmission ?? '—'}</span></div>
+            <div className="spec-item"><span className="spec-label">{t.vehicle.fuel}</span><span className="spec-value">{translateFuel(t.vehicle, vehicle.fuel) ?? '—'}</span></div>
+            <div className="spec-item"><span className="spec-label">{t.vehicle.transmission}</span><span className="spec-value">{translateTrans(t.vehicle, vehicle.transmission) ?? '—'}</span></div>
           </div>
           {vehicle.description && <div className="description">{vehicle.description}</div>}
         </div>
