@@ -62,6 +62,9 @@ export default function ConnexionPage() {
         </form>
 
         {error && <p style={{ color: 'crimson', marginTop: 16 }}>{error}</p>}
+        <p style={{ marginTop: 16 }}>
+          <a href="/mot-de-passe-oublie">{t.auth.forgotPassword}</a>
+        </p>
 
         <p style={{ marginTop: 20 }}>
           {t.auth.noAccount} <a href="/inscription">{t.auth.signupLink}</a>
