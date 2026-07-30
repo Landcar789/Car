@@ -46,7 +46,7 @@ export default function AccueilPage() {
           alignItems: 'flex-end',
           padding: '0 24px 60px',
           background:
-            'linear-gradient(0deg, rgba(11,20,19,0.88) 0%, rgba(11,20,19,0.45) 55%, rgba(11,20,19,0.15) 100%), linear-gradient(135deg, #33413d, #1c2a28)',
+            'linear-gradient(0deg, rgba(11,20,19,0.85) 0%, rgba(11,20,19,0.55) 55%, rgba(11,20,19,0.35) 100%), url(/assets/hero.jpeg)',
           backgroundSize: 'cover',
           backgroundPosition: 'center',
         }}
