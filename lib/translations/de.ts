@@ -32,13 +32,13 @@ export const de = {
       payment: {
         title: 'Zahlungsbedingungen',
         item1: 'Anzahlung: 25% bei Bestellung',
-        item2: 'Restbetrag (75%): zahlbar in zinslosen Raten von 6 bis 36 Monaten',
+        item2: 'Restbetrag (75%): zahlbar bei Lieferung oder in zinslosen Raten von 6 bis 36 Monaten',
         item3: 'Sonderangebot: 15% Rabatt bei Barzahlung zum Zeitpunkt der Bestellung',
       },
       service: {
         title: 'Service und Lieferung',
         item1: 'Übernahme aller Importformalitäten bis zur Lieferung nach Hause',
-        item2: 'Lieferzeit: 7 Tage',
+        item2: 'Lieferzeit: maximal 7 bis 10 Tage',
         item3: 'Widerrufsrecht: 14 Tage (Geld-zurück-Garantie)',
       },
       warranty: {

@@ -8,7 +8,7 @@ export const fr = {
     orders: 'Mes commandes',
     faq: 'FAQ',
     help: 'Aide',
-    address: 'Allensteiner Str. 26a, Kehl',
+    address: 'Allensteiner Str. 26a, 77694 Kehl, Allemagne',
   },
   home: {
     eyebrow: 'Votre concession en ligne',
@@ -32,13 +32,13 @@ export const fr = {
       payment: {
         title: 'Conditions de paiement',
         item1: 'Acompte : 25% à la commande',
-        item2: 'Montant restant (75%) : payable en mensualités sans intérêt, de 6 à 36 mois',
+        item2: 'Montant restant (75%) : payable à la livraison ou en mensualités sans intérêt, de 6 à 36 mois',
         item3: 'Offre spéciale : -15% de remise pour un paiement comptant lors de la commande',
       },
       service: {
         title: 'Service et Livraison',
         item1: 'Prise en charge de toutes les formalités d\'importation jusqu\'à la livraison à domicile',
-        item2: 'Délai de livraison : 7 jours',
+        item2: 'Délai de livraison : 7 à 10 jours maximum',
         item3: 'Droit de rétractation : 14 jours (satisfait ou remboursé)',
       },
       warranty: {
