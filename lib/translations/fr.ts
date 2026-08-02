@@ -252,4 +252,9 @@ export const fr = {
     viewVehicle: 'Voir le véhicule',
     loginToFav: 'Connectez-vous ou créez un compte pour ajouter ce véhicule à vos favoris.',
   },
+  reviews: {
+    title: 'Avis clients',
+    subtitle: 'Ce que nos clients disent de nous',
+    empty: 'Soyez le premier à nous laisser un avis.',
+  },
 }

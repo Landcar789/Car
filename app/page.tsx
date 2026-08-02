@@ -5,6 +5,7 @@ import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import { Car, ShieldCheck, Wrench, Truck, FileCheck, MessageSquare } from 'lucide-react'
 import { useLanguage } from '@/lib/LanguageContext'
+import ReviewsSection from '@/components/ReviewsSection'
 
 export default function AccueilPage() {
   const [openCond, setOpenCond] = useState<number | null>(0)
@@ -127,7 +128,8 @@ export default function AccueilPage() {
           ))}
         </div>
       </div>
-
+      <ReviewsSection />
+      
       <Footer />
     </>
   )

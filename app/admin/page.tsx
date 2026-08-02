@@ -5,6 +5,7 @@ import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import AddVehicleForm from '@/components/AddVehicleForm'
 import DeleteVehicleButton from '@/components/DeleteVehicleButton'
+import ReviewsAdmin from '@/components/ReviewsAdmin'
 import Link from 'next/link'
 
 export default async function AdminPage() {
@@ -17,6 +18,11 @@ export default async function AdminPage() {
 
   const { data: vehicles } = await supabase
     .from('vehicles')
+    .select('*')
+    .order('created_at', { ascending: false })
+
+  const { data: reviews } = await supabase
+    .from('reviews')
     .select('*')
     .order('created_at', { ascending: false })
 
@@ -42,7 +48,7 @@ export default async function AdminPage() {
                 <th>Prix</th>
                 <th>Ajouté le</th>
                 <th>Statut</th>
-<th>Action</th>
+                <th>Action</th>
               </tr>
             </thead>
             <tbody>
@@ -50,18 +56,20 @@ export default async function AdminPage() {
                 <tr key={v.id}>
                   <td>{v.brand} {v.model} {v.year}</td>
                   <td>{v.price_eur.toLocaleString('fr-FR')} €</td>
-                  <td>
-                  <span className={`status-badge ${v.is_published ? 'verified' : 'pending'}`}>
-                     {v.is_published ? 'Publié' : 'Masqué'}
-                   </span>
-                  </td>
                   <td>{new Date(v.created_at).toLocaleDateString('fr-FR')}</td>
+                  <td>
+                    <span className={`status-badge ${v.is_published ? 'verified' : 'pending'}`}>
+                      {v.is_published ? 'Publié' : 'Masqué'}
+                    </span>
+                  </td>
                   <td><DeleteVehicleButton vehicleId={v.id} vehicleName={`${v.brand} ${v.model}`} isPublished={v.is_published} /></td>
                 </tr>
               ))}
             </tbody>
           </table>
         </div>
+
+        <ReviewsAdmin reviews={reviews ?? []} />
       </div>
       <Footer />
     </>
