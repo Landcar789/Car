@@ -51,10 +51,7 @@ export default function AccueilPage() {
           display: 'flex',
           alignItems: 'flex-end',
           padding: '0 24px 70px',
-          background:
-            'linear-gradient(0deg, rgba(11,20,19,0.85) 0%, rgba(11,20,19,0.55) 55%, rgba(11,20,19,0.35) 100%), url(/assets/hero.jpeg)',
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
+          background: 'var(--petrol)',
         }}
       >
         <div style={{ maxWidth: 1100, margin: '0 auto', width: '100%' }}>
