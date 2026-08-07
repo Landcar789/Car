@@ -522,3 +522,248 @@ h2.section-title {
   background: #ffffff !important;
   color: #1c2a2e !important;
 }
+/* ===== NOUVEAU STYLE FORMULAIRE D'ACHAT (site 2) ===== */
+
+/* Étapes plus visibles */
+.achat-steps .step {
+  flex: 1;
+  text-align: center;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 10px 6px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  border-bottom: 1px solid var(--line);
+}
+.achat-steps .step.done {
+  color: var(--ok);
+  border-color: rgba(47,122,77,0.3);
+  background: rgba(47,122,77,0.05);
+}
+.achat-steps .step.active {
+  color: var(--gold);
+  border-color: var(--gold);
+  background: rgba(201,162,39,0.06);
+}
+
+/* Cartes plus douces */
+.achat-card {
+  border-radius: 16px;
+  padding: 26px;
+}
+
+/* Titres de section avec pastille numérotée */
+h2.section-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border-bottom: 2px solid var(--line);
+  color: var(--text);
+}
+.section-title .sec-num {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--petrol);
+  color: #fff;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-family: 'Inter', sans-serif;
+}
+
+/* Champs modernisés avec focus glow */
+.field label { font-weight: 600; color: var(--text); }
+.field input, .field select, .field textarea {
+  background: var(--bg);
+  border-radius: 10px;
+  padding: 12px 14px;
+  transition: border-color 0.18s, box-shadow 0.18s, background 0.18s;
+}
+.field input:focus, .field select:focus, .field textarea:focus {
+  outline: none;
+  border-color: var(--gold);
+  background: #fff;
+  box-shadow: 0 0 0 3px rgba(201,162,39,0.12);
+}
+
+/* Zone upload */
+.upload-box {
+  border-radius: 12px;
+  padding: 22px;
+  transition: all 0.2s;
+}
+.upload-box:hover {
+  border-color: var(--gold);
+  background: rgba(201,162,39,0.04);
+  color: var(--text);
+}
+
+/* Pills retrait/livraison */
+.radio-pill {
+  border-radius: 10px;
+  padding: 12px 18px;
+  font-weight: 600;
+}
+.radio-pill.checked {
+  border-color: var(--gold);
+  background: rgba(201,162,39,0.10);
+  color: var(--text);
+}
+
+/* Bouton submit arrondi */
+.submit-btn { border-radius: 11px; }
+
+/* Bloc acompte mis en avant (remplace la jauge) */
+.deposit-box {
+  margin-top: 22px;
+  background: linear-gradient(135deg, rgba(201,162,39,0.12), rgba(201,162,39,0.03));
+  border: 1px solid rgba(201,162,39,0.3);
+  border-radius: 12px;
+  padding: 20px;
+  text-align: center;
+}
+.deposit-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-dim);
+  margin-bottom: 8px;
+}
+.deposit-value {
+  font-family: 'Oswald', sans-serif;
+  font-weight: 700;
+  font-size: 30px;
+  color: var(--gold);
+  line-height: 1;
+}
+.deposit-sub {
+  font-size: 12px;
+  color: var(--text-dim);
+  margin-top: 6px;
+}
+
+/* Note montant restant centrée */
+.summary-card .note {
+  text-align: center;
+  margin-top: 14px;
+}
+/* ===== NOUVEAU STYLE PAGE PAIEMENT (site 2) ===== */
+.amount-hero {
+  background: linear-gradient(135deg, var(--petrol), #2a2620);
+  color: #fff;
+  border-radius: 16px;
+  padding: 28px;
+  text-align: center;
+  margin-bottom: 20px;
+}
+.amount-hero-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: rgba(255,255,255,0.6);
+  margin-bottom: 10px;
+}
+.amount-hero-value {
+  font-family: 'Oswald', sans-serif;
+  font-weight: 700;
+  font-size: 46px;
+  line-height: 1;
+  color: var(--gold);
+}
+.amount-hero-sub {
+  font-size: 12.5px;
+  color: rgba(255,255,255,0.55);
+  margin-top: 10px;
+}
+
+.narrow-card { border-radius: 16px; }
+.narrow-card h2 { border-bottom: 2px solid var(--line); }
+
+.bank-value.ref-highlight { color: var(--gold); }
+
+.deposit-confirm-btn {
+  background: var(--gold);
+  color: #211705;
+}
+.deposit-confirm-btn:disabled {
+  background: var(--surface-2);
+  color: var(--text-dim);
+}
+/* ===== NOUVEAU STYLE PAGE CONFIRMATION (site 2) ===== */
+.success-hero {
+  background: linear-gradient(135deg, rgba(47,122,77,0.10), rgba(47,122,77,0.02));
+  border: 1px solid rgba(47,122,77,0.25);
+  border-radius: 18px;
+  padding: 40px 28px;
+  text-align: center;
+  margin-bottom: 22px;
+}
+.success-hero-icon {
+  width: 76px;
+  height: 76px;
+  border-radius: 50%;
+  background: var(--ok);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 20px;
+  box-shadow: 0 10px 30px rgba(47,122,77,0.3);
+  animation: popIn 0.5s cubic-bezier(0.34,1.56,0.64,1) forwards;
+  opacity: 0;
+}
+.success-hero h1 {
+  font-family: 'Oswald', sans-serif;
+  font-size: 27px;
+  font-weight: 600;
+  margin: 0 0 10px;
+}
+.success-hero p {
+  color: var(--text-dim);
+  font-size: 14px;
+  max-width: 440px;
+  margin: 0 auto 16px;
+}
+
+/* Récap : acompte surligné */
+.recap-row.total {
+  background: rgba(201,162,39,0.06);
+  margin: 6px -10px;
+  padding: 12px 10px;
+  border-radius: 8px;
+}
+.recap-row.total b {
+  color: var(--gold);
+  font-family: 'Oswald', sans-serif;
+  font-size: 17px;
+}
+
+/* Timeline améliorée */
+.tl-dot {
+  width: 32px;
+  height: 32px;
+  font-size: 13px;
+}
+.tl-item:not(:last-child)::before {
+  left: 15px;
+  top: 32px;
+}
+.tl-dot.current {
+  box-shadow: 0 0 0 4px rgba(201,162,39,0.15);
+}
+.tl-content h4 { font-size: 14px; }
+
+/* Boutons confirmation harmonisés */
+.confirm-actions .btn-primary-confirm {
+  background: var(--petrol);
+  border-radius: 11px;
+}
+.confirm-actions .btn-whatsapp {
+  border-radius: 11px;
+}

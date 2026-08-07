@@ -1,6 +1,6 @@
 import { Resend } from 'resend'
 
-const resend = new Resend(process.env.RESEND_API_KEY)
+const resend = process.env.RESEND_API_KEY ? new Resend(process.env.RESEND_API_KEY) : null
 
 const FROM = 'Deutschland Auto Car <commande@deutschlandautocar.com>'
 const MANAGER_EMAIL = 'deutschlandautocar@gmail.com'
@@ -20,6 +20,7 @@ type OrderInfo = {
 // === EMAILS AU GÉRANT (toujours en français) ===
 
 export async function sendManagerNotification(order: OrderInfo) {
+  if (!resend) return
   try {
     await resend.emails.send({
       from: FROM,
@@ -47,6 +48,7 @@ export async function sendManagerNotification(order: OrderInfo) {
 }
 
 export async function sendManagerReceiptAlert(order: OrderInfo) {
+  if (!resend) return
   try {
     await resend.emails.send({
       from: FROM,
@@ -72,6 +74,7 @@ export async function sendManagerReceiptAlert(order: OrderInfo) {
 // === EMAILS AU CLIENT (selon sa langue) ===
 
 export async function sendClientConfirmation(order: OrderInfo) {
+  if (!resend) return
   const isDE = order.lang === 'de'
   const price = order.vehiclePrice.toLocaleString('fr-FR')
   const deposit = order.depositAmount.toLocaleString('fr-FR')
@@ -116,6 +119,7 @@ export async function sendClientConfirmation(order: OrderInfo) {
 }
 
 export async function sendClientReceiptAck(order: OrderInfo) {
+  if (!resend) return
   const isDE = order.lang === 'de'
 
   const subject = isDE

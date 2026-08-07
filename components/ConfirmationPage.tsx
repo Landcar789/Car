@@ -36,9 +36,9 @@ export default function ConfirmationPage({ order }: { order: Order }) {
         <div className="step done">{t.payment.step4}</div>
       </div>
 
-      <div className="success-block">
-        <div className="success-icon">
-          <Check size={34} strokeWidth={2.5} />
+      <div className="success-hero">
+        <div className="success-hero-icon">
+          <Check size={38} strokeWidth={2.5} />
         </div>
         <h1 className="fade-up d1">{t.confirmation.successTitle}</h1>
         <p className="fade-up d2">{t.confirmation.successText}</p>

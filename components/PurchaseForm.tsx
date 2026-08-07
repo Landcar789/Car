@@ -79,7 +79,6 @@ export default function PurchaseForm({ vehicle }: { vehicle: Vehicle }) {
 
       if (orderError) throw orderError
 
-      // Envoyer les emails de notification (gérant + client)
       const reference = order.id.slice(0, 8).toUpperCase()
       fetch('/api/send-order-emails', {
         method: 'POST',
@@ -122,7 +121,7 @@ export default function PurchaseForm({ vehicle }: { vehicle: Vehicle }) {
 
       <div className="achat-grid">
         <form className="achat-card" onSubmit={handleSubmit}>
-          <h2 className="section-title">{t.purchase.buyerInfo}</h2>
+          <h2 className="section-title"><span className="sec-num">1</span>{t.purchase.buyerInfo}</h2>
           <div className="row2">
             <div className="field"><label>{t.purchase.fullName} <span className="req">*</span></label><input name="full_name" type="text" required /></div>
             <div className="field"><label>{t.purchase.email} <span className="req">*</span></label><input name="email" type="email" required /></div>
@@ -135,7 +134,7 @@ export default function PurchaseForm({ vehicle }: { vehicle: Vehicle }) {
           <div className="field">
             <label>{t.purchase.idDoc} <span className="req">*</span></label>
             <label className={`upload-box ${file ? 'has-file' : ''}`}>
-              {file ? `✅ ${file.name}` : t.purchase.idDocPlaceholder}
+              {file ? file.name : t.purchase.idDocPlaceholder}
               <input
                 type="file"
                 accept="image/*,.pdf"
@@ -145,7 +144,7 @@ export default function PurchaseForm({ vehicle }: { vehicle: Vehicle }) {
             </label>
           </div>
 
-          <h2 className="section-title">{t.purchase.pickup}</h2>
+          <h2 className="section-title"><span className="sec-num">2</span>{t.purchase.pickup}</h2>
           <div className="field">
             <label>{t.purchase.pickupMode}</label>
             <div className="radio-group">
@@ -161,7 +160,7 @@ export default function PurchaseForm({ vehicle }: { vehicle: Vehicle }) {
           </div>
           <div className="field"><label>{t.purchase.desiredDate}</label><input name="desired_date" type="date" /></div>
 
-          <h2 className="section-title">{t.purchase.moreInfo}</h2>
+          <h2 className="section-title"><span className="sec-num">3</span>{t.purchase.moreInfo}</h2>
           <div className="field"><label>{t.purchase.comment}</label><textarea name="comment" rows={3} placeholder={t.purchase.commentPlaceholder} /></div>
 
           <div className="consent">
@@ -193,14 +192,10 @@ export default function PurchaseForm({ vehicle }: { vehicle: Vehicle }) {
           <div className="price-row"><span>{t.purchase.fees}</span><b>0 €</b></div>
           <div className="price-row total"><span>{t.purchase.total}</span><b>{vehicle.price_eur.toLocaleString('fr-FR')} €</b></div>
 
-          <div className="gauge-wrap">
-            <div className="gauge-label">{t.purchase.depositRequired}</div>
-            <svg width="180" height="100" viewBox="0 0 180 100">
-              <path d="M 15 90 A 75 75 0 0 1 165 90" fill="none" stroke="#e2e0d8" strokeWidth="14" strokeLinecap="round" />
-              <path d="M 15 90 A 75 75 0 0 1 68 22" fill="none" stroke="#c9a227" strokeWidth="14" strokeLinecap="round" />
-              <circle cx="68" cy="22" r="5" fill="#1c2a2e" />
-            </svg>
-            <div className="gauge-value">25% = <b>{acompte.toLocaleString('fr-FR')} €</b></div>
+          <div className="deposit-box">
+            <div className="deposit-label">{t.purchase.depositRequired}</div>
+            <div className="deposit-value">{acompte.toLocaleString('fr-FR')} €</div>
+            <div className="deposit-sub">25%</div>
           </div>
 
           <div className="note">{t.purchase.remaining} <b style={{ color: 'var(--text)' }}>{reste.toLocaleString('fr-FR')} €</b></div>

@@ -61,12 +61,11 @@ export default function PaymentPage({ order }: { order: Order }) {
         <p>{t.payment.warning}</p>
       </div>
 
-      <div className="narrow-card fade-up d1">
-        <h2>{t.payment.amountTitle}</h2>
-        <div className="amount-due">
-          <span className="label">{t.payment.amountLabel} {order.vehicles.brand} {order.vehicles.model})</span>
-          <span className="value">{order.deposit_amount.toLocaleString('fr-FR')} €</span>
-        </div>
+      {/* MONTANT EN GRAND */}
+      <div className="amount-hero fade-up d1">
+        <div className="amount-hero-label">{t.payment.amountLabel} {order.vehicles.brand} {order.vehicles.model})</div>
+        <div className="amount-hero-value">{order.deposit_amount.toLocaleString('fr-FR')} €</div>
+        <div className="amount-hero-sub">{t.payment.amountSub}</div>
       </div>
 
       <div className="narrow-card fade-up d2">
@@ -82,7 +81,7 @@ export default function PaymentPage({ order }: { order: Order }) {
               </span>
             </div>
             <div className="bank-row"><span className="bank-label">{t.payment.bic}</span><span className="bank-value">{settings.bic}</span></div>
-            <div className="bank-row"><span className="bank-label">{t.payment.reference}</span><span className="bank-value">CMD-{reference}</span></div>
+            <div className="bank-row"><span className="bank-label">{t.payment.reference}</span><span className="bank-value ref-highlight">CMD-{reference}</span></div>
           </>
         ) : (
           <p style={{ color: 'var(--text-dim)', fontSize: 13 }}>{t.payment.loading}</p>
@@ -105,7 +104,7 @@ export default function PaymentPage({ order }: { order: Order }) {
         </div>
 
         <button
-          className="submit-btn"
+          className="submit-btn deposit-confirm-btn"
           style={{ marginTop: 20 }}
           onClick={() => {
             fetch('/api/send-receipt-emails', {
