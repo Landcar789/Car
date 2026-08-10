@@ -44,51 +44,41 @@ export default function AccueilPage() {
       <Header />
 
       {/* HERO */}
-      <div
-        style={{
-          position: 'relative',
-          minHeight: 480,
-          display: 'flex',
-          alignItems: 'flex-end',
-          padding: '0 24px 70px',
-          background: 'var(--petrol)',
-        }}
-      >
-        <div style={{ maxWidth: 1100, margin: '0 auto', width: '100%' }}>
-          <div style={{ maxWidth: 560 }}>
-            <div className="fade-up d1" style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: 12, textTransform: 'uppercase', letterSpacing: '0.08em', color: 'var(--gold)', marginBottom: 14 }}>
-              {t.home.eyebrow}
-            </div>
-            <h1 className="fade-up d2" style={{ fontFamily: 'Oswald, sans-serif', fontSize: 42, fontWeight: 600, lineHeight: 1.15, margin: '0 0 18px', color: '#fff' }}>
-              {t.home.title}
-            </h1>
-            <p className="fade-up d3" style={{ color: '#d9dedb', fontSize: 15.5, margin: '0 0 26px', maxWidth: 460 }}>
-              {t.home.subtitle}
-            </p>
-            <div className="fade-up d4" style={{ display: 'flex', gap: 12, flexWrap: 'wrap', marginBottom: 30 }}>
-              <a href="/marketplace" style={{ background: 'var(--gold)', color: '#211705', border: 'none', padding: '13px 24px', borderRadius: 8, fontWeight: 600, fontSize: 14, cursor: 'pointer', textDecoration: 'none' }}>
-                {t.home.seeVehicles}
-              </a>
-              <a href="/faq" style={{ background: 'rgba(255,255,255,0.06)', color: '#fff', border: '1px solid rgba(255,255,255,0.35)', padding: '13px 24px', borderRadius: 8, fontWeight: 600, fontSize: 14, cursor: 'pointer', textDecoration: 'none' }}>
-                {t.home.contactUs}
-              </a>
-            </div>
+      <div className="hero-welt">
+        <div className="glow glow1"></div>
+        <div className="glow glow2"></div>
 
-            {/* Carte stats flottante */}
-            <div className="fade-up d4" style={{ display: 'inline-flex', gap: 26, background: 'rgba(255,255,255,0.97)', border: '1px solid var(--line)', borderRadius: 14, padding: '14px 24px', boxShadow: '0 16px 36px rgba(0,0,0,0.2)' }}>
-              <div style={{ textAlign: 'center' }}>
-                <div style={{ fontFamily: 'Oswald, sans-serif', fontWeight: 700, fontSize: 24, color: 'var(--text)' }}>200<span style={{ color: 'var(--gold)' }}>+</span></div>
-                <div style={{ fontSize: 11.5, color: 'var(--text-dim)' }}>{t.home.statVehicles}</div>
-              </div>
-              <div style={{ width: 1, background: 'var(--line)' }}></div>
-              <div style={{ textAlign: 'center' }}>
-                <div style={{ fontFamily: 'Oswald, sans-serif', fontWeight: 700, fontSize: 24, color: 'var(--text)' }}>24<span style={{ color: 'var(--gold)' }}>m</span></div>
-                <div style={{ fontSize: 11.5, color: 'var(--text-dim)' }}>{t.home.statWarranty}</div>
-              </div>
-            </div>
+        <div className="globe-deco">
+          <svg viewBox="0 0 200 200" fill="none" stroke="#5b9bf0" strokeWidth="1">
+            <circle cx="100" cy="100" r="80" />
+            <ellipse cx="100" cy="100" rx="35" ry="80" />
+            <ellipse cx="100" cy="100" rx="70" ry="80" />
+            <line x1="20" y1="100" x2="180" y2="100" />
+            <line x1="30" y1="60" x2="170" y2="60" />
+            <line x1="30" y1="140" x2="170" y2="140" />
+          </svg>
+        </div>
+
+        <div className="hero-content">
+          <div className="welt-eyebrow"><span className="dot"></span>{t.home.eyebrow}</div>
+          <h1>{t.home.title}</h1>
+          <p className="welt-sub">{t.home.subtitle}</p>
+          <div className="welt-actions">
+            <a href="/marketplace" className="welt-btn-primary">
+              {t.home.seeVehicles}
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
+            </a>
+            <a href="/faq" className="welt-btn-ghost">{t.home.contactUs}</a>
+          </div>
+          <div className="welt-stats">
+            <div className="welt-stat"><div className="n">200<span>+</span></div><div className="l">{t.home.statVehicles}</div></div>
+            <div className="welt-stat"><div className="n">24<span>m</span></div><div className="l">{t.home.statWarranty}</div></div>
+            <div className="welt-stat"><div className="n">7<span>j</span></div><div className="l">{t.home.heroBadge}</div></div>
           </div>
         </div>
       </div>
+
+      {/* SERVICES */}
 
       {/* SERVICES */}
       <div style={{ maxWidth: 1100, margin: '0 auto', padding: '60px 24px 40px' }}>
