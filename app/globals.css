@@ -504,23 +504,30 @@ h2.section-title {
     min-width: 0;
   }
   .site-header {
-    flex-direction: column;
-    gap: 14px;
-    padding: 14px 16px;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 12px 16px;
+    flex-wrap: wrap;
   }
   .site-header .left-controls {
-    order: 2;
-    width: 100%;
-    justify-content: space-between;
-  }
-  .site-header .brand {
     order: 1;
+    flex-direction: row;
+    align-items: center;
+    gap: 12px;
+    flex: 1;
+  }
+  .site-header .left-controls .brand {
+    margin-left: auto;
   }
   .site-header .brand img {
-    height: 58px !important;
+    height: 50px !important;
   }
   .site-header > .login-btn {
-    order: 3;
+    order: 2;
+    width: 100%;
+    text-align: center;
   }
   .left-controls {
     position: static;
