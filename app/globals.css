@@ -489,6 +489,20 @@ h2.section-title {
     width: 12px;
     height: 12px;
   }
+  .infobar .infobar-icon {
+    display: none;
+  }
+  .infobar .right {
+    gap: 8px;
+    flex-shrink: 0;
+  }
+  .infobar {
+    align-items: center;
+  }
+  .infobar-address {
+    flex: 1;
+    min-width: 0;
+  }
   .site-header {
     flex-direction: column;
     gap: 14px;
