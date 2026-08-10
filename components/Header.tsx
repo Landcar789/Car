@@ -56,7 +56,7 @@ export default function Header() {
             <Menu size={20} strokeWidth={2} />
           </div>
           <Link href="/" className="brand">
-            <Image src="/assets/logo.jpg" alt="Deutschland Auto Car" width={70} height={90} style={{ objectFit: 'contain', height: 64, width: 'auto' }} priority />
+            <Image src="/assets/welt.png" alt="AutoWelt" width={2000} height={600} style={{ objectFit: 'contain', height: 80, width: 'auto' }} priority />
           </Link>
           <div className={`side-menu ${menuOpen ? 'open' : ''}`}>
             <Link href="/compte" onClick={() => setMenuOpen(false)}>{t.header.favorites}</Link>

@@ -2,7 +2,7 @@ import { Resend } from 'resend'
 
 const resend = process.env.RESEND_API_KEY ? new Resend(process.env.RESEND_API_KEY) : null
 
-const FROM = 'Deutschland Auto Car <commande@deutschlandautocar.com>'
+const FROM = 'AutoWelt <commande@deutschlandautocar.com>'
 const MANAGER_EMAIL = 'deutschlandautocar@gmail.com'
 
 type OrderInfo = {
@@ -95,7 +95,7 @@ export async function sendClientConfirmation(order: OrderInfo) {
       <hr>
       <p>Um abzuschließen, überweisen Sie die Anzahlung und senden Sie uns anschließend Ihren Beleg per WhatsApp oder E-Mail unter Angabe Ihrer Referenz <strong>CMD-${order.reference}</strong>.</p>
       <p>Unser Team bestätigt Ihre Bestellung innerhalb von 24 bis 48 Stunden.</p>
-      <p>Bis bald,<br>Ihr Team von Deutschland Auto Car</p>
+      <p>Bis bald,<br>Ihr Team von AutoWelt</p>
     `
     : `
       <h2>Merci pour votre commande !</h2>
@@ -108,7 +108,7 @@ export async function sendClientConfirmation(order: OrderInfo) {
       <hr>
       <p>Pour finaliser, effectuez le virement de l'acompte puis envoyez-nous votre reçu par WhatsApp ou email en indiquant votre référence <strong>CMD-${order.reference}</strong>.</p>
       <p>Notre équipe validera votre commande sous 24 à 48h.</p>
-      <p>À bientôt,<br>L'équipe Deutschland Auto Car</p>
+      <p>À bientôt,<br>L'équipe AutoWelt</p>
     `
 
   try {
@@ -132,14 +132,14 @@ export async function sendClientReceiptAck(order: OrderInfo) {
       <p>Hallo ${order.fullName},</p>
       <p>Wir haben vermerkt, dass Sie Ihren Zahlungsbeleg für die Bestellung <strong>CMD-${order.reference}</strong> (${order.vehicleName}) gesendet haben.</p>
       <p>Unser Team prüft Ihre Zahlung und Sie erhalten innerhalb von 24 bis 48 Werktagsstunden eine endgültige Bestätigung.</p>
-      <p>Vielen Dank für Ihr Vertrauen,<br>Ihr Team von Deutschland Auto Car</p>
+      <p>Vielen Dank für Ihr Vertrauen,<br>Ihr Team von AutoWelt</p>
     `
     : `
       <h2>Merci !</h2>
       <p>Bonjour ${order.fullName},</p>
       <p>Nous avons bien noté que vous avez envoyé votre reçu de paiement pour la commande <strong>CMD-${order.reference}</strong> (${order.vehicleName}).</p>
       <p>Notre équipe vérifie votre paiement et vous recevrez une confirmation définitive sous 24 à 48h ouvrées.</p>
-      <p>Merci de votre confiance,<br>L'équipe Deutschland Auto Car</p>
+      <p>Merci de votre confiance,<br>L'équipe AutoWelt</p>
     `
 
   try {

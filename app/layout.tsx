@@ -3,8 +3,8 @@ import "./globals.css";
 import { LanguageProvider } from "@/lib/LanguageContext";
 
 export const metadata: Metadata = {
-  title: "Deutschland Auto Car",
-  description: "Votre concession en ligne — véhicules d'occasion et neufs, livrés partout en Europe.",
+  title: "AutoWelt",
+  description: "Votre concession automobile en ligne — véhicules d'occasion et neufs, livrés partout en Europe.",
 };
 
 export default function RootLayout({

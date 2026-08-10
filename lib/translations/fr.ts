@@ -55,7 +55,7 @@ export const fr = {
     },
   },
   footer: {
-    rights: '© 2026 Deutschland Auto Car. Tous droits réservés.',
+    rights: '© 2026 AutoWelt. Tous droits réservés.',
   },
   marketplace: {
     searchPlaceholder: 'Rechercher une marque, un modèle...',

@@ -9,7 +9,7 @@ export default function Footer() {
     <footer className="site-footer">
       <div className="foot-wrap">
         <div>
-          <b>DEUTSCHLAND AUTO CAR</b><br />
+          <b>AUTOWELT</b><br />
           Allensteiner Str. 26a<br />
           77694 Kehl, Allemagne
         </div>
