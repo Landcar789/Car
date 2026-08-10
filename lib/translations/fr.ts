@@ -163,6 +163,12 @@ export const fr = {
     newPasswordBtn: 'Enregistrer le nouveau mot de passe',
     newPasswordSaving: 'Enregistrement...',
     newPasswordDone: 'Mot de passe modifié ! Vous pouvez maintenant vous connecter.',
+    visualTitle: 'Votre prochaine voiture vous attend chez',
+    loginSub: 'Accédez à votre espace client.',
+    perk1: 'Suivez vos commandes en temps réel',
+    perk2: 'Enregistrez vos véhicules favoris',
+    perk3: 'Un accompagnement jusqu\'à la livraison',
+    signupSub: 'Créez votre compte en quelques secondes.',
   },
   purchase: {
     title: 'Formulaire d\'achat',

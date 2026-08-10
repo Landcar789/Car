@@ -55,7 +55,7 @@ export const de = {
     },
   },
   footer: {
-    rights: '© 2026 Deutschland Auto Car. Alle Rechte vorbehalten.',
+    rights: '© 2026 AutoWelt. Alle Rechte vorbehalten.',
   },
   marketplace: {
     searchPlaceholder: 'Marke oder Modell suchen...',
@@ -163,6 +163,12 @@ export const de = {
     newPasswordBtn: 'Neues Passwort speichern',
     newPasswordSaving: 'Wird gespeichert...',
     newPasswordDone: 'Passwort geändert! Sie können sich jetzt anmelden.',
+    visualTitle: 'Ihr nächstes Auto wartet bei',
+    loginSub: 'Zugang zu Ihrem Kundenbereich.',
+    perk1: 'Verfolgen Sie Ihre Bestellungen in Echtzeit',
+    perk2: 'Speichern Sie Ihre Lieblingsfahrzeuge',
+    perk3: 'Begleitung bis zur Lieferung',
+    signupSub: 'Erstellen Sie Ihr Konto in wenigen Sekunden.',
   },
   purchase: {
     title: 'Kaufformular',

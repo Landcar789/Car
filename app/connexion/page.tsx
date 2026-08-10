@@ -36,40 +36,57 @@ export default function ConnexionPage() {
   return (
     <>
       <Header />
-      <main style={{ maxWidth: 400, margin: '60px auto', padding: '0 24px', fontFamily: 'Inter, sans-serif' }}>
-        <h1 style={{ fontFamily: 'Oswald, sans-serif' }}>{t.auth.loginTitle}</h1>
+      <div className="auth-page">
+        <div className="auth-card">
+          <div className="auth-visual">
+            <div className="auth-badge"><span className="dot"></span>AutoWelt</div>
 
-        <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-          <input
-            type="email"
-            placeholder={t.auth.email}
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-            style={{ padding: 10, fontSize: 16 }}
-          />
-          <input
-            type="password"
-            placeholder={t.auth.password}
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-            style={{ padding: 10, fontSize: 16 }}
-          />
-          <button type="submit" disabled={loading} style={{ padding: 10, fontSize: 16 }}>
-            {loading ? t.auth.loginLoading : t.auth.loginBtn}
-          </button>
-        </form>
+            <svg className="auth-globe" viewBox="0 0 200 200" fill="none" stroke="#5b9bf0" strokeWidth="1.2">
+              <circle cx="100" cy="100" r="85" />
+              <ellipse cx="100" cy="100" rx="38" ry="85" />
+              <ellipse cx="100" cy="100" rx="72" ry="85" />
+              <line x1="15" y1="100" x2="185" y2="100" />
+              <line x1="28" y1="55" x2="172" y2="55" />
+              <line x1="28" y1="145" x2="172" y2="145" />
+            </svg>
 
-        {error && <p style={{ color: 'crimson', marginTop: 16 }}>{error}</p>}
-        <p style={{ marginTop: 16 }}>
-          <a href="/mot-de-passe-oublie">{t.auth.forgotPassword}</a>
-        </p>
+            <h2>{t.auth.visualTitle} <span className="accent">AutoWelt</span>.</h2>
 
-        <p style={{ marginTop: 20 }}>
-          {t.auth.noAccount} <a href="/inscription">{t.auth.signupLink}</a>
-        </p>
-      </main>
+            <div className="auth-pts">
+              <div className="auth-pt"><span className="ic">✓</span> {t.auth.perk1}</div>
+              <div className="auth-pt"><span className="ic">♡</span> {t.auth.perk2}</div>
+              <div className="auth-pt"><span className="ic">★</span> {t.auth.perk3}</div>
+            </div>
+          </div>
+
+          <div className="auth-form-side">
+            <div className="auth-logo"><span className="b">auto</span><span className="o">welt</span></div>
+            <h1>{t.auth.loginTitle}</h1>
+            <p className="auth-sub">{t.auth.loginSub}</p>
+
+            <form onSubmit={handleSubmit}>
+              <div className="auth-field">
+                <label>{t.auth.email}</label>
+                <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} required placeholder="vous@email.com" />
+              </div>
+              <div className="auth-field">
+                <label>{t.auth.password}</label>
+                <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} required placeholder="••••••••" />
+              </div>
+
+              <div className="auth-forgot"><a href="/mot-de-passe-oublie">{t.auth.forgotPassword}</a></div>
+
+              {error && <div className="auth-msg error" style={{ marginTop: 14 }}>{error}</div>}
+
+              <button type="submit" className="auth-btn" disabled={loading} style={{ marginTop: 18 }}>
+                {loading ? t.auth.loginLoading : t.auth.loginBtn}
+              </button>
+            </form>
+
+            <div className="auth-switch">{t.auth.noAccount} <a href="/inscription">{t.auth.signupLink}</a></div>
+          </div>
+        </div>
+      </div>
       <Footer />
     </>
   )
