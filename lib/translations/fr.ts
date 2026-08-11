@@ -8,7 +8,7 @@ export const fr = {
     orders: 'Mes commandes',
     faq: 'FAQ',
     help: 'Aide',
-    address: 'Allensteiner Str. 26a, 77694 Kehl, Allemagne',
+    address: 'Königsberger Str. 9, 77694 Kehl, Allemagne',
   },
   home: {
     eyebrow: 'Achat & livraison de véhicules',

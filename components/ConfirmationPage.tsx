@@ -18,7 +18,7 @@ export default function ConfirmationPage({ order }: { order: Order }) {
   const whatsappMessage = encodeURIComponent(
     `Bonjour, je vous contacte au sujet de ma commande CMD-${reference} (${order.vehicles.brand} ${order.vehicles.model}).`
   )
-  const whatsappLink = `https://wa.me/491778612854?text=${whatsappMessage}`
+  const whatsappLink = `https://wa.me/4915255603028?text=${whatsappMessage}`
 
   return (
     <div className="narrow-wrap">
