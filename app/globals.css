@@ -1,13 +1,13 @@
 :root {
   --bg: #f5f7fa;
   --surface: #ffffff;
-  --surface-2: #eef2f7;
+  --surface-2: #eef3fb;
   --line: #dde3ea;
   --text: #1b2a6b;
   --text-dim: #5a6472;
   --petrol: #1b2a6b;
   --petrol-dark: #141f4d;
-  --gold: #f47b20;
+  --gold: #2c6fd8;
   --alert: #d23b2e;
   --ok: #2f7a4d;
 }
@@ -976,4 +976,15 @@ h2.section-title {
   .auth-card { grid-template-columns: 1fr; max-width: 420px; }
   .auth-visual { display: none; }
   .auth-form-side { padding: 40px 30px; }
+}
+/* ===== Boutons page paiement uniformisés (bleu léger) ===== */
+.narrow-card .btn-whatsapp,
+.narrow-card .btn-primary-confirm {
+  background: var(--surface-2) !important;
+  color: var(--petrol) !important;
+  border: 1px solid var(--line) !important;
+}
+.narrow-card .btn-whatsapp:hover,
+.narrow-card .btn-primary-confirm:hover {
+  background: #e3ecf9 !important;
 }

@@ -123,7 +123,7 @@ export default function FeaturedVehicles() {
               </div>
               <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', paddingTop: 14, borderTop: '1px solid var(--line)' }}>
                 <div style={{ fontFamily: 'Oswald, sans-serif', fontWeight: 700, fontSize: 20 }}>{v.price_eur.toLocaleString('fr-FR')} €</div>
-                <span style={{ background: 'var(--gold)', color: '#211705', padding: '8px 14px', borderRadius: 8, fontSize: 12.5, fontWeight: 600 }}>{t.home.featuredView}</span>
+                <span style={{ background: '#fff', color: 'var(--petrol)', border: '1px solid var(--line)', padding: '8px 14px', borderRadius: 8, fontSize: 12.5, fontWeight: 600 }}>{t.home.featuredView}</span>
               </div>
             </div>
           </a>
