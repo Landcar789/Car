@@ -11,35 +11,43 @@ function ConfirmContent() {
 
   useEffect(() => {
     const confirm = async () => {
-      const token_hash = searchParams.get('token_hash')
-      const type = searchParams.get('type')
+      // On récupère TOUT ce qui est dans l'URL (query + hash)
+      const allParams: Record<string, string> = {}
+      searchParams.forEach((v, k) => { allParams[k] = v })
+      const hash = typeof window !== 'undefined' ? window.location.hash : ''
 
-      if (!token_hash) {
-        setMessage('Lien invalide.')
+      const supabase = createClient()
+
+      const token_hash = searchParams.get('token_hash')
+      const code = searchParams.get('code')
+      const type = searchParams.get('type') || 'email'
+
+      if (token_hash) {
+        const { error } = await supabase.auth.verifyOtp({ type: type as 'email', token_hash })
+        if (error) { setMessage('verifyOtp erreur: ' + error.message); return }
+        setMessage('Confirmé (otp) ! Redirection...')
+        setTimeout(() => router.push('/compte-confirme'), 1000)
         return
       }
 
-      const supabase = createClient()
-      const { error } = await supabase.auth.verifyOtp({
-        type: (type as 'email') ?? 'email',
-        token_hash,
-      })
-
-      if (error) {
-        setMessage('Erreur : ' + error.message)
-      } else {
-        setMessage('Compte confirmé ! Redirection...')
+      if (code) {
+        const { error } = await supabase.auth.exchangeCodeForSession(code)
+        if (error) { setMessage('exchangeCode erreur: ' + error.message); return }
+        setMessage('Confirmé (code) ! Redirection...')
         setTimeout(() => router.push('/compte-confirme'), 1000)
+        return
       }
+
+      // Rien trouvé : on montre ce qu'il y avait dans l'URL
+      setMessage('Aucun token. Query=' + JSON.stringify(allParams) + ' Hash=' + hash)
     }
     confirm()
   }, [searchParams, router])
 
   return (
-    <main style={{ maxWidth: 420, margin: '80px auto', padding: '0 24px', textAlign: 'center', fontFamily: 'Inter, sans-serif' }}>
+    <main style={{ maxWidth: 520, margin: '80px auto', padding: '0 24px', textAlign: 'center', fontFamily: 'Inter, sans-serif' }}>
       <h1 style={{ fontFamily: 'Oswald, sans-serif' }}>Confirmation du compte</h1>
-      <div style={{ fontSize: 40, margin: '20px 0' }}>✅</div>
-      <p style={{ color: 'var(--text-dim)' }}>{message}</p>
+      <p style={{ color: 'var(--text-dim)', marginTop: 20, wordBreak: 'break-all' }}>{message}</p>
     </main>
   )
 }
