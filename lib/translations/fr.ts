@@ -71,6 +71,11 @@ export const fr = {
     priceAsc: 'Preis aufsteigend',
     priceDesc: 'Preis absteigend',
     reset: 'Zurücksetzen',
+    brandsEyebrow: 'Nos marques',
+    brandsTitle: 'Les plus grandes marques',
+    brandsSeeAll: 'Voir tout',
+    brandsNotListed: 'Votre marque n\'est pas dans la liste ?',
+    brandsSeeAllVehicles: 'Voir tous les véhicules',
   },
   faq: {
     eyebrow: 'Besoin d\'aide ?',

@@ -988,3 +988,142 @@ h2.section-title {
 .narrow-card .btn-primary-confirm:hover {
   background: #e3ecf9 !important;
 }
+/* ===== SECTION NOS MARQUES (marketplace) ===== */
+.brands-section {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 40px 24px 10px;
+}
+.brands-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+  gap: 14px;
+}
+.brands-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-dim);
+  margin-bottom: 10px;
+}
+.brands-eyebrow::before {
+  content: '';
+  width: 26px;
+  height: 2px;
+  background: var(--gold);
+}
+.brands-title {
+  font-family: 'Oswald', sans-serif;
+  font-size: 28px;
+  font-weight: 600;
+  margin: 0;
+  color: var(--petrol);
+}
+.brands-seeall {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  border: 1px solid var(--line);
+  background: #fff;
+  color: var(--text-dim);
+  padding: 10px 18px;
+  border-radius: 9px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+  transition: border-color 0.18s, color 0.18s;
+}
+.brands-seeall:hover { border-color: var(--gold); color: var(--petrol); }
+
+.brands-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 16px;
+}
+.brand-card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 22px 12px;
+  text-align: center;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  box-shadow: 0 2px 8px rgba(20,31,77,0.04);
+  transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+  font-family: inherit;
+}
+.brand-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 14px 30px rgba(20,31,77,0.12);
+  border-color: var(--gold);
+}
+.brand-card.active {
+  border-color: var(--gold);
+  background: var(--surface-2);
+}
+.brand-logo {
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.brand-logo img {
+  max-width: 40px;
+  max-height: 40px;
+  object-fit: contain;
+}
+.brand-nm {
+  font-family: 'Oswald', sans-serif;
+  font-weight: 600;
+  font-size: 13.5px;
+  color: var(--petrol);
+}
+
+.brands-footer {
+  margin-top: 16px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 20px;
+  text-align: center;
+}
+.brands-footer .l1 {
+  color: var(--text-dim);
+  font-size: 14px;
+  margin-bottom: 6px;
+}
+.brands-footer .l2 {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  color: var(--petrol);
+  font-weight: 600;
+  font-size: 15px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+}
+.brands-footer .l2:hover { color: var(--gold); }
+
+@media (max-width: 900px) {
+  .brands-grid { grid-template-columns: repeat(4, 1fr); }
+}
+@media (max-width: 560px) {
+  .brands-grid { grid-template-columns: repeat(3, 1fr); gap: 10px; }
+  .brand-card { padding: 16px 8px; }
+  .brands-title { font-size: 22px; }
+}
