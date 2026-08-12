@@ -7,6 +7,8 @@ import ReviewsSection from '@/components/ReviewsSection'
 import { Car, ShieldCheck, Wrench, Truck, FileCheck, MessageSquare } from 'lucide-react'
 import { useLanguage } from '@/lib/LanguageContext'
 import FeaturedVehicles from '@/components/FeaturedVehicles'
+import ContactSection from '@/components/ContactSection'
+import BrandsSection from '@/components/BrandsSection'
 
 export default function AccueilPage() {
   const [openCond, setOpenCond] = useState<number | null>(0)
@@ -68,7 +70,7 @@ export default function AccueilPage() {
               {t.home.seeVehicles}
               <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
             </a>
-            <a href="/faq" className="welt-btn-ghost">{t.home.contactUs}</a>
+          <a href="#contact" className="welt-btn-ghost">{t.home.contactUs}</a> 
           </div>
           <div className="welt-stats">
             <div className="welt-stat"><div className="n">200<span>+</span></div><div className="l">{t.home.statVehicles}</div></div>
@@ -120,6 +122,7 @@ export default function AccueilPage() {
           })}
         </div>
       </div>
+      <BrandsSection />
       <FeaturedVehicles />
       {/* PROCEDURES / CONDITIONS */}
       <div style={{ maxWidth: 1100, margin: '0 auto', padding: '40px 24px' }}>
@@ -152,7 +155,7 @@ export default function AccueilPage() {
       </div>
 
       <ReviewsSection />
-
+      <ContactSection />
       <Footer />
     </>
   )

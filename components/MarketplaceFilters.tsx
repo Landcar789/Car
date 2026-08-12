@@ -1,6 +1,7 @@
 'use client'
 
-import { useState, useMemo } from 'react'
+import { useState, useMemo, useEffect } from 'react'
+import { useSearchParams } from 'next/navigation'
 import CarCard from '@/components/CarCard'
 import { useLanguage } from '@/lib/LanguageContext'
 
@@ -16,22 +17,6 @@ type Vehicle = {
   vehicle_photos?: { url: string; position: number }[]
 }
 
-// Marques vitrine (logo = slug Simple Icons, ou null si pas de logo)
-const showcaseBrands: { name: string; logo: string | null }[] = [
-  { name: 'BMW', logo: 'bmw' },
-  { name: 'Mercedes-Benz', logo: null },
-  { name: 'Audi', logo: 'audi' },
-  { name: 'Volkswagen', logo: 'volkswagen' },
-  { name: 'Porsche', logo: 'porsche' },
-  { name: 'Toyota', logo: 'toyota' },
-  { name: 'Honda', logo: 'honda' },
-  { name: 'Hyundai', logo: 'hyundai' },
-  { name: 'Kia', logo: 'kia' },
-  { name: 'Ford', logo: 'ford' },
-  { name: 'Renault', logo: 'renault' },
-  { name: 'Tesla', logo: 'tesla' },
-]
-
 export default function MarketplaceFilters({ vehicles }: { vehicles: Vehicle[] }) {
   const { t } = useLanguage()
   const [search, setSearch] = useState('')
@@ -39,6 +24,12 @@ export default function MarketplaceFilters({ vehicles }: { vehicles: Vehicle[] }
   const [transmission, setTransmission] = useState('')
   const [fuel, setFuel] = useState('')
   const [price, setPrice] = useState('')
+
+  const searchParams = useSearchParams()
+  useEffect(() => {
+    const marque = searchParams.get('marque')
+    if (marque) setBrand(marque)
+  }, [searchParams])
 
   const brands = useMemo(() => [...new Set(vehicles.map((v) => v.brand).filter(Boolean))].sort(), [vehicles])
   const transmissions = useMemo(() => [...new Set(vehicles.map((v) => v.transmission).filter(Boolean))].sort() as string[], [vehicles])
@@ -69,50 +60,6 @@ export default function MarketplaceFilters({ vehicles }: { vehicles: Vehicle[] }
 
   return (
     <>
-      {/* SECTION NOS MARQUES */}
-      <div className="brands-section">
-        <div className="brands-head">
-          <div>
-            <div className="brands-eyebrow">{t.marketplace.brandsEyebrow}</div>
-            <h2 className="brands-title">{t.marketplace.brandsTitle}</h2>
-          </div>
-          {brand && (
-            <button className="brands-seeall" onClick={() => setBrand('')}>
-              {t.marketplace.brandsSeeAll} →
-            </button>
-          )}
-        </div>
-
-        <div className="brands-grid">
-          {showcaseBrands.map((b) => (
-            <button
-              key={b.name}
-              className={`brand-card ${brand === b.name ? 'active' : ''}`}
-              onClick={() => setBrand(brand === b.name ? '' : b.name)}
-              type="button"
-            >
-              <span className="brand-logo">
-                {b.logo ? (
-                  <img
-                    src={`https://cdn.simpleicons.org/${b.logo}`}
-                    alt={b.name}
-                    onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = 'none' }}
-                  />
-                ) : null}
-              </span>
-              <span className="brand-nm">{b.name}</span>
-            </button>
-          ))}
-        </div>
-
-        <div className="brands-footer">
-          <div className="l1">{t.marketplace.brandsNotListed}</div>
-          <button className="l2" onClick={() => setBrand('')} type="button">
-            {t.marketplace.brandsSeeAllVehicles} →
-          </button>
-        </div>
-      </div>
-
       <div className="filterbar">
         <input
           className="grow"

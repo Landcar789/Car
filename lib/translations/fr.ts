@@ -57,6 +57,16 @@ export const fr = {
   footer: {
     rights: '© 2026 AutoWelt. Tous droits réservés.',
   },
+  contact: {
+    eyebrow: 'Contact',
+    title: 'Contactez-nous',
+    lede: 'Notre équipe est à votre disposition pour vous accompagner dans votre projet automobile.',
+    hours: 'Horaires',
+    weekdays: 'Lundi – Vendredi',
+    saturday: 'Samedi',
+    sunday: 'Dimanche',
+    closed: 'Fermé',
+  },
   marketplace: {
     searchPlaceholder: 'Rechercher une marque, un modèle...',
     brand: 'Marque',
