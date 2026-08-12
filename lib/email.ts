@@ -2,7 +2,7 @@ import { Resend } from 'resend'
 
 const resend = process.env.RESEND_API_KEY ? new Resend(process.env.RESEND_API_KEY) : null
 
-const FROM = 'AutoWelt <commande@deutschlandautocar.com>'
+const FROM = 'AutoWelt <commande@autoweltcar.com>'
 const MANAGER_EMAIL = 'autocarwelt@gmail.com'
 
 type OrderInfo = {
