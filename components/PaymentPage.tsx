@@ -38,7 +38,7 @@ export default function PaymentPage({ order }: { order: Order }) {
   }
 
   const whatsappLink = `https://wa.me/4915255603028?text=${encodeURIComponent(`Bonjour, voici le reçu de paiement pour ma commande CMD-${reference} (${order.vehicles.brand} ${order.vehicles.model}).`)}`
-  const mailLink = `mailto:autocarwelt@gmail.com?subject=${encodeURIComponent(`Reçu paiement CMD-${reference}`)}&body=${encodeURIComponent(`Bonjour, veuillez trouver ci-joint le reçu de paiement pour ma commande CMD-${reference} (${order.vehicles.brand} ${order.vehicles.model}).`)}`
+  const mailLink = `mailto:autocarweltt@gmail.com?subject=${encodeURIComponent(`Reçu paiement CMD-${reference}`)}&body=${encodeURIComponent(`Bonjour, veuillez trouver ci-joint le reçu de paiement pour ma commande CMD-${reference} (${order.vehicles.brand} ${order.vehicles.model}).`)}`
 
   return (
     <div className="narrow-wrap">
